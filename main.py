@@ -1,5 +1,4 @@
-import pandas as pd
-
+import keyring as kr
 
 def ADMIN_menu_SETUP():
     print("Welcome to The GUARDIAN INTERACTIVE SECURITY SYSTEM")
@@ -16,6 +15,7 @@ def ADMIN_menu_SETUP():
     correct = input("Enter number: ")
 
     if correct == '1':
+        kr.set_password("GISS", ADMIN_username, ADMIN_passsword)
         print("Perfect!! Welcome to the GISS")
 
     elif correct == '2':
