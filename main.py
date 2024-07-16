@@ -1,3 +1,6 @@
+import pandas as pd
+
+
 def ADMIN_menu_SETUP():
     print("Welcome to The GUARDIAN INTERACTIVE SECURITY SYSTEM")
 
@@ -19,10 +22,14 @@ def ADMIN_menu_SETUP():
         print("Sorry about that! Please enter your information again:")
         #create admin menu System. 
 
+    #return ADMIN_username, ADMIN_password
+
+
 def ADMIN_menu():
-1. change permissions
-2. change password
-3. CALL OUR HELPLINE
+    print("Hello!")
+    print ("1. change permissions")
+    print ("2. change password")
+    print ("3. CALL OUR HELPLINE")
 
 
 
@@ -38,13 +45,13 @@ def main_menu():
 
     if desiredAction == '5':
         ADMIN_menu()
-    elif desiredAction == '1':
+    #elif desiredAction == '1':
        # ADMIN_menu()
-    elif desiredAction == '2':
+    #elif desiredAction == '2':
        # ADMIN_menu()
-    elif desiredAction == '3':
+   # elif desiredAction == '3':
        # ADMIN_menu()
-    elif desiredAction == '4':
+   # elif desiredAction == '4':
        # ADMIN_menu()
 
 
@@ -52,6 +59,9 @@ def main_menu():
         print("ERROR! This function is still being developed. Please try again later!")
 
 def addNewUser():
+    userUsername = input("Please enter your username: ")
+    userPassword = input("Please enter your password: ")
+
 
 
 
