@@ -1,5 +1,10 @@
 import keyring as kr
 
+class user:
+    def _init_(self, name, permission_level):
+        self.name = name
+        self.permission_level = permission_level
+
 def ADMIN_menu_SETUP():
     print("Welcome to The GUARDIAN INTERACTIVE SECURITY SYSTEM")
 
@@ -15,8 +20,11 @@ def ADMIN_menu_SETUP():
     correct = input("Enter number: ")
 
     if correct == '1':
-        kr.set_password("GISS", ADMIN_username, ADMIN_password)
-        print("Perfect!! Welcome to the GISS")
+
+        kr.set_password("GISS", ADMIN_username, ADMIN_passsword)
+        admin = user(ADMIN_username, 1)
+        print("Perfect!! Welcome to the GISS", admin.name)
+
 
     elif correct == '2':
         print("Sorry about that! Please enter your information again:")
