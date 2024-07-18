@@ -72,6 +72,7 @@ def ADMIN_menu():
         changePassword()
     if AdminInput == '5':
         print("For additional help please contact our helpline at +1(123)456-789")
+        return
 
 def changePassword():
     #pass in password
