@@ -60,6 +60,7 @@ def ADMIN_menu():
 def changePassword():
     #pass in password
     print("Warning: If you do not remember your old password, please contact our helpline at +1(123)456-789")
+    verifyUsername = input("Please enter your username:")
     OldPassword = input("Please enter your OLD password: ")
 
     if OldPassword == OldPassword:
@@ -69,6 +70,8 @@ def changePassword():
 
         if NewPassword == NewPassword2: 
             #store password
+            kr.delete_password("GISS", verifyUsername)
+            kr.set_password("GISS", verifyUsername, NewPassword2)
             NewPassword2 = NewPassword2
         else: 
             print("Sorry. That was incorrect. Please try again.")
@@ -88,16 +91,24 @@ def main_menu():
 
     desiredAction = input("Enter number: ")
 #change based off of type of user
-    if desiredAction == '1':
+    if ((desiredAction == '1') and (user.permission_level == 1 or user.permission_level == 2)):
         changePassword()
+        main_menu()
+    elif ((desiredAction == '1') and (user.permission_level == 3)):
+        print("Permission denied")
+        main_menu()
     elif desiredAction == '2':
         ARM_GISS()
     elif desiredAction == '3':
         DISARM_GISS()
-    elif desiredAction == '4':
+    elif ((desiredAction == '4') and (user.permission_level == 1)):
         ADMIN_menu()
+    elif ((desiredAction == '4') and (user.permission_level == 2 or user.permission_level == 3)):
+        print("Permission denied")
+        main_menu()
     elif desiredAction == '5':
         print("For additional help please contact our helpline at +1(123)456-789")
+        return
 
     #else:
        # print("ERROR! This function is still being developed. Please try again later!")
@@ -105,19 +116,29 @@ def main_menu():
 def addNewUser():
     userUsername = input("Please enter your username: ")
     userPassword = input("Please enter your password: ")
+    kr.set_password = ("GISS", userUsername, userPassword)
+    permission = input("What permission level would you like to grant this user? Press 2 for authorized user or 3 for alternate user")
+    newUser = user(userUsername, permission)
+    print("User added.")
+    main_menu()
 #store
 
 def removeUser():
     #pass in username
     userUsername = input("Please enter the username of the profile you would like to delete: ")
     #verify this username exists
+    kr.delete_password("GISS", userUsername)
+    print("User removed.")
+    main_menu()
 
 def ARM_GISS():
     print("ERROR! This function is still being developed. Please try again later!")
+    main_menu()
 
 def DISARM_GISS():
     #ask for username and password
     print("ERROR! This function is still being developed. Please try again later!")
+    main_menu()
 
 ADMIN_menu_SETUP()
 main_menu()
