@@ -21,7 +21,7 @@ def ADMIN_menu_SETUP():
 
     if correct == '1':
 
-        kr.set_password("GISS", ADMIN_username, ADMIN_passsword)
+        kr.set_password("GISS", ADMIN_username, ADMIN_password)
         admin = user(ADMIN_username, 1)
         print("Perfect!! Welcome to the GISS", admin.name)
 
