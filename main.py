@@ -1,9 +1,24 @@
+import keyring.backend
+#from keyring_pass import PasswordStoreBackend
+#keyring.set_keyring(PasswordStoreBackend())
+class TestKeyring(keyring.backend.KeyringBackend):
+    """A test keyring which always outputs same password
+    """
+    def supported(self): return 0
+    def set_password(self, servicename, username, password): return 0
+    def get_password(self, servicename, username):
+        return "password from TestKeyring"
+    def delete_password(self, servicename, username, password): return 0
+
+# set the keyring for keyring lib
 import keyring as kr
+keyring.set_keyring(TestKeyring())
 
 class user:
-    def _init_(self, name, permission_level):
+    def set_profile(self, name, password, permission_level):
         self.name = name
         self.permission_level = permission_level
+        self.userPassword = password
 
 def ADMIN_menu_SETUP():
     print("Welcome to The GUARDIAN INTERACTIVE SECURITY SYSTEM")
@@ -11,6 +26,7 @@ def ADMIN_menu_SETUP():
     print("Please set up an ADMIN user profile:")
     ADMIN_username = input("Please enter your username: ")
     ADMIN_password = input("Please enter your password: ")
+    
     
     print(f"\nUsername: {ADMIN_username}")
     print("Password: " + "*" * len(ADMIN_password))  
@@ -22,7 +38,7 @@ def ADMIN_menu_SETUP():
     if correct == '1':
 
         kr.set_password("GISS", ADMIN_username, ADMIN_password)
-        admin = user(ADMIN_username, 1)
+        admin.set_profile(ADMIN_username, ADMIN_password, 1)
         print("Perfect!! Welcome to the GISS", admin.name)
 
 
@@ -56,6 +72,7 @@ def ADMIN_menu():
         changePassword()
     if AdminInput == '5':
         print("For additional help please contact our helpline at +1(123)456-789")
+        return
 
 def changePassword():
     #pass in password
@@ -70,7 +87,7 @@ def changePassword():
 
         if NewPassword == NewPassword2: 
             #store password
-            kr.delete_password("GISS", verifyUsername)
+            kr.delete_password("GISS", verifyUsername, OldPassword)
             kr.set_password("GISS", verifyUsername, NewPassword2)
             NewPassword2 = NewPassword2
         else: 
@@ -91,19 +108,19 @@ def main_menu():
 
     desiredAction = input("Enter number: ")
 #change based off of type of user
-    if ((desiredAction == '1') and (user.permission_level == 1 or user.permission_level == 2)):
+    if ((desiredAction == '1') and (admin.permission_level == 1 or admin.permission_level == 2)):
         changePassword()
         main_menu()
-    elif ((desiredAction == '1') and (user.permission_level == 3)):
+    elif ((desiredAction == '1') and (admin.permission_level == 3)):
         print("Permission denied")
         main_menu()
     elif desiredAction == '2':
         ARM_GISS()
     elif desiredAction == '3':
         DISARM_GISS()
-    elif ((desiredAction == '4') and (user.permission_level == 1)):
+    elif ((desiredAction == '4') and (admin.permission_level == 1)):
         ADMIN_menu()
-    elif ((desiredAction == '4') and (user.permission_level == 2 or user.permission_level == 3)):
+    elif ((desiredAction == '4') and (admin.permission_level == 2 or user.permission_level == 3)):
         print("Permission denied")
         main_menu()
     elif desiredAction == '5':
@@ -140,5 +157,6 @@ def DISARM_GISS():
     print("ERROR! This function is still being developed. Please try again later!")
     main_menu()
 
+admin = user()
 ADMIN_menu_SETUP()
 main_menu()
