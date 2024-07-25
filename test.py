@@ -1,29 +1,15 @@
 from gpiozero import LED
 from time import sleep
-from guizero import App, Text, PushButton
+from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
+from tkinter import Spinbox
+
 import sys
-app = App(title="GUI Development")
-message = Text(app, text="welcome to our First GUI")
-
-def switch_on():
-  print("ON")
-
-def close_gui():
-  sys.exit()
-
-
-
-button1 = PushButton(app, command=switch_on, text="LED ON", width=10,height=3)
-
-
-
-
-button5 = PushButton(app, command=close_gui, text="Close", grid=[1,4])
 
 
 import keyring.backend
 #from keyring_pass import PasswordStoreBackend
 #keyring.set_keyring(PasswordStoreBackend())
+
 class TestKeyring(keyring.backend.KeyringBackend):
     """A test keyring which always outputs same password
     """
@@ -43,16 +29,37 @@ class user:
         self.permission_level = permission_level
         self.userPassword = password
 
+def you_chose(selected_value):
+    if selected_value == "Facial ID":
+        result.value = "Please stand in front of the camera"
+    elif selected.value == "Voice ID":
+        result.value = "Please say, 'Hello, I am home!'"
+    else:
+        result.value = "Please enter your pincode now."
+
+
+app = App(title="GUI Development")
+message = Text(app, text="Welcome to the Guardian Interactive Security System")
+
+
+
+#def switch_on():
+  #print("ON")
+
+def close_gui():
+  sys.exit()
+
+
 def ADMIN_menu_SETUP():
     print("Welcome to The GUARDIAN INTERACTIVE SECURITY SYSTEM")
 
     print("Please set up an ADMIN user profile:")
     ADMIN_username = input("Please enter your username: ")
     ADMIN_password = input("Please enter your password: ")
-    
-    
+
+
     print(f"\nUsername: {ADMIN_username}")
-    print("Password: " + "*" * len(ADMIN_password))  
+    print("Password: " + "*" * len(ADMIN_password))
     print("Is this correct?")
 
     print("Type the number 1 for YES or 2 for NO")
@@ -67,7 +74,7 @@ def ADMIN_menu_SETUP():
 
     elif correct == '2':
         print("Sorry about that! Please enter your information again:")
-        #create admin menu System. 
+        #create admin menu System.
 
     #return ADMIN_username, ADMIN_password
 
@@ -84,15 +91,18 @@ def ADMIN_menu():
     AdminInput = input("Enter number: ")
 
     if AdminInput == '1':
-        addNewUser()
+       # addNewUser()
+        button6 = PushButton(app, command=addNewUser, text="Add a New User", width=10,height=3)
     elif AdminInput == '2':
-        removeUser()
+       # removeUser()
+       button7 = PushButton(app, command=removeUser, text="Remove a User", width=10,height=3)
     elif AdminInput == '3':
         print("Choose a User to change permissions for")
         #Display all users
 
     elif AdminInput == '4':
-        changePassword()
+       # changePassword()
+        button8 = PushButton(app, command=changePassword, text="Add a New User", width=10,height=3)
     if AdminInput == '5':
         print("For additional help please contact our helpline at +1(123)456-789")
         return
@@ -108,14 +118,15 @@ def changePassword():
         #store this
         NewPassword2 = input("Please enter your NEW password again: ")
 
-        if NewPassword == NewPassword2: 
+        if NewPassword == NewPassword2:
             #store password
             kr.delete_password("GISS", verifyUsername, OldPassword)
             kr.set_password("GISS", verifyUsername, NewPassword2)
             NewPassword2 = NewPassword2
-        else: 
+        else:
             print("Sorry. That was incorrect. Please try again.")
             main_menu() #or admin menu
+
 
 
     
@@ -182,6 +193,22 @@ def DISARM_GISS():
 
 admin = user()
 ADMIN_menu_SETUP()
-main_menu()
+#main_menu()
+
+instructions = Text(app, text="Choose an identification method")
+combo = Combo(app, options=["", "Facial ID", "Voice ID", "Passcode"], command=you_chose)
+result = Text(app)
+
+name = TextBox(app, text="Laura")
+name.tk.config(cursor="target")
+
+button1 = PushButton(app, command=ADMIN_menu, text="Admin Menu", width=10,height=3)
+button2 = PushButton(app, command=main_menu, text="Main Menu", width=10,height=3)
+
+
+#combo = Combo(app, options=["", "tue", "wed","thurs", "fri"])
+
+button5 = PushButton(app, command=close_gui, text="Close", grid=[1,4])
 
 app.display()
+
