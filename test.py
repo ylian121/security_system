@@ -41,15 +41,18 @@ def you_chose(selected_value):
 app = App(title="GUI Development")
 message = Text(app, text="Welcome to the Guardian Interactive Security System")
 
+def YES():
+    message = Text(app, text="Great!")
 
+
+def NO():
+    Admin_menu_SETUP()
 
 #def switch_on():
   #print("ON")
 
 def close_gui():
   sys.exit()
-
-
 def ADMIN_menu_SETUP():
     print("Welcome to The GUARDIAN INTERACTIVE SECURITY SYSTEM")
 
@@ -62,6 +65,9 @@ def ADMIN_menu_SETUP():
     print("Password: " + "*" * len(ADMIN_password))
     print("Is this correct?")
 
+    button16 = PushButton(app, command=YES, text="Yes", width=10,height=3)
+    button17 = PushButton(app, command=NO, text="No", width=10,height=3, visible=1)
+    
     print("Type the number 1 for YES or 2 for NO")
     correct = input("Enter number: ")
 
