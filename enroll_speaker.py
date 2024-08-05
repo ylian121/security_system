@@ -3,6 +3,9 @@ from pvrecorder import PvRecorder
 
 access_key = "UQOnRaJ10JVpaGU0XYreQaSBIV+JMUU387+IzalVU+C2U1bAyvC4EQ=="
 
+# Update: Have user insert their name for their profile 
+speaker_name = input("Enter the speaker's name: ")
+
 try:
     eagle_profiler = pveagle.create_profiler(access_key=access_key)
 except pveagle.EagleError as e:
@@ -27,7 +30,9 @@ recorder.stop()
 
 speaker_profile = eagle_profiler.export()
 
-with open("speaker_profile.eagle", "wb") as f:
+# Update Save the profile and assign with the user's name
+profile_filename = f"{speaker_name}_profile.eagle"
+with open(profile_filename, "wb") as f:
     f.write(speaker_profile.to_bytes())
 
 recorder.delete()
