@@ -4,7 +4,12 @@ from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
 from tkinter import Spinbox
 
 import sys
+import os
 
+# check if 
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using :0.0')
+    os.environ.__setitem__('DISPLAY', ':0.0')
 
 '''import keyring.backend
 #from keyring_pass import PasswordStoreBackend
@@ -217,5 +222,6 @@ button2 = PushButton(app, command=main_menu, text="Main Menu", width=10,height=3
 
 button5 = PushButton(app, command=close_gui, text="Close", grid=[1,4])
 
+run_tkinter()
 app.display()
 
