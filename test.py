@@ -6,7 +6,7 @@ from tkinter import Spinbox
 import sys
 
 
-import keyring.backend
+'''import keyring.backend
 #from keyring_pass import PasswordStoreBackend
 #keyring.set_keyring(PasswordStoreBackend())
 
@@ -22,6 +22,7 @@ class TestKeyring(keyring.backend.KeyringBackend):
 # set the keyring for keyring lib
 import keyring as kr
 keyring.set_keyring(TestKeyring())
+'''
 
 class user:
     def set_profile(self, name, password, permission_level):
@@ -73,7 +74,7 @@ def ADMIN_menu_SETUP():
 
     if correct == '1':
 
-        kr.set_password("GISS", ADMIN_username, ADMIN_password)
+        #kr.set_password("GISS", ADMIN_username, ADMIN_password)
         admin.set_profile(ADMIN_username, ADMIN_password, 1)
         print("Perfect!! Welcome to the GISS", admin.name)
 
@@ -126,8 +127,8 @@ def changePassword():
 
         if NewPassword == NewPassword2:
             #store password
-            kr.delete_password("GISS", verifyUsername, OldPassword)
-            kr.set_password("GISS", verifyUsername, NewPassword2)
+            #kr.delete_password("GISS", verifyUsername, OldPassword)
+            #kr.set_password("GISS", verifyUsername, NewPassword2)
             NewPassword2 = NewPassword2
         else:
             print("Sorry. That was incorrect. Please try again.")
@@ -173,7 +174,7 @@ def main_menu():
 def addNewUser():
     userUsername = input("Please enter your username: ")
     userPassword = input("Please enter your password: ")
-    kr.set_password = ("GISS", userUsername, userPassword)
+    #kr.set_password = ("GISS", userUsername, userPassword)
     permission = input("What permission level would you like to grant this user? Press 2 for authorized user or 3 for alternate user")
     newUser = user(userUsername, permission)
     print("User added.")
@@ -184,7 +185,7 @@ def removeUser():
     #pass in username
     userUsername = input("Please enter the username of the profile you would like to delete: ")
     #verify this username exists
-    kr.delete_password("GISS", userUsername)
+    #kr.delete_password("GISS", userUsername)
     print("User removed.")
     main_menu()
 
