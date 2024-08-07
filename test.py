@@ -1,7 +1,7 @@
 from gpiozero import LED
 from time import sleep
 from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
-from tkinter import Spinbox
+#from tkinter import Spinbox
 
 import sys
 import os
@@ -211,8 +211,8 @@ instructions = Text(app, text="Choose an identification method")
 combo = Combo(app, options=["", "Facial ID", "Voice ID", "Passcode"], command=you_chose)
 result = Text(app)
 
-name = TextBox(app, text="Laura")
-name.tk.config(cursor="target")
+#name = TextBox(app, text="Laura")
+#name.tk.config(cursor="target")
 
 button1 = PushButton(app, command=ADMIN_menu, text="Admin Menu", width=10,height=3)
 button2 = PushButton(app, command=main_menu, text="Main Menu", width=10,height=3)
@@ -222,6 +222,6 @@ button2 = PushButton(app, command=main_menu, text="Main Menu", width=10,height=3
 
 button5 = PushButton(app, command=close_gui, text="Close", grid=[1,4])
 
-run_tkinter()
+#run_tkinter()
 app.display()
 
