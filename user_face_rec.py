@@ -31,10 +31,10 @@ def capture_face_and_save(folder="faces"):
     cap.release()
     cv2.destroyAllWindows()
 
-# Example usage
+# Getting new user
 capture_face_and_save()
 
-# Encode faces from the updated folder
+# Encode faces from folder
 sfr = SimpleFacerec()
 sfr.load_encoding_images("faces/")
 
