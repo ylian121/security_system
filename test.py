@@ -10,6 +10,9 @@ import sys
 #import keyring.backend
 #from tkinter import messagebox
 #from tkinter import *
+import os
+
+os.environ['DISPLAY'] = ':0'
 
 """
 #KEYRING
