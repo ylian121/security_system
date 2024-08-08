@@ -7,7 +7,7 @@ from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
 #root = tk.Tk()
 #from tkinter import simpledialog
 import sys
-import keyring.backend
+#import keyring.backend
 #from tkinter import messagebox
 #from tkinter import *
 
