@@ -3,6 +3,7 @@ import cv2
 import face_recognition as fr
 import numpy as np
 
+
 def get_encoded_faces():
     encoded = {}
     
