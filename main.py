@@ -7,6 +7,8 @@ import cv2
 import os
 from simple_facerec import SimpleFacerec
 
+# runs until exit
+# can constantly add new users into the system
 while True:
 
     # option for the user to pick
