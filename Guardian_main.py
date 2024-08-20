@@ -192,6 +192,12 @@ def addNewUser(tempUser):
     if temp == password:
         tempUser.set_profile(username, password, permLevelNEW)
     print(tempUser.name)
+    enroll_speaker()
+    print("Speaker successfully enrolled")
+    #app.warn("Speaker enrolled")
+    capture_new_user()
+    print("User's face enrolled")
+    
     return tempUser
 
     #button2.visible = 0
@@ -277,10 +283,13 @@ def changePermissions():
        return
 def ARM():
     #print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
-    app.warn("Uh oh!", "Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
+    app.warn("System armed!")
+    recognize_speaker()
+    face_recognition()
+    
 def DISARM():
    # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
-   app.warn("Uh oh!", "Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
+   app.warn("System Successfully Disarmed!")
 ##################################################################
 app = App(title="GISS")
 message = Text(app, text="Guardian Interactive Security System!")
