@@ -3,16 +3,14 @@ from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
 #import encryption
 import saving_passwords
 #import files for voice
-import recognize_speaker
-import matchName
+from enroll_speaker import enroll_speaker
+from recognize_speaker import recognize_speaker
 #import files for face
-import face
-import simple_facerec
-import video
-import user_face_rec
-import facial_recognition
-import faceRec
-import new_user
+from new_user import capture_new_user, facial_recognition
+from faceRec import face_recognition
+import cv2
+import os
+from simple_facerec import SimpleFacerec
 
 class user:
     def __init__(self):
