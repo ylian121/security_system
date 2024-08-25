@@ -449,23 +449,35 @@ def changePassword():
    # else: 
     #        app.warn("Uh oh!", "Warning: attempted to change password of wrong account")
      #       return
-    passwordNEW = app.question("Please type in your new password", "NEW PASSWORD: ", initial_value=None)
-    passwordREENTER = app.question("Please re-enter your new password", "RE-ENTER NEW PASSWORD: ", initial_value=None)
-    if passwordNEW == passwordREENTER:
-        if typer == admin: 
-           admin.userPassword = passwordNEW
-        elif typer == USER1: 
-           USER1.userPassword = passwordNEW
-        elif typer == USER2:
-           USER2.userPassword = passwordNEW
-        elif typer == USER3:
-           USER3.userPassword = passwordNEW
-        elif typer == USER4:
-           USER4.userPassword = passwordNEW
-        elif typer == USER5:
-           USER5.userPassword = passwordNEW
+    if passwordCURRENT is not None and passwordCURRENT != "":
+         passwordNEW = app.question("Please type in your new password", "NEW PASSWORD: ", initial_value=None)
+         if passwordNEW is not None and passwordNEW != "":
+             passwordREENTER = app.question("Please re-enter your new password", "RE-ENTER NEW PASSWORD: ", initial_value=None)
+             if passwordNEW == passwordREENTER:
+                 if typer == admin:
+                     admin.userPassword = passwordNEW
+                 elif typer == USER1:
+                     USER1.userPassword = passwordNEW
+                 elif typer == USER2:
+                     USER2.userPassword = passwordNEW
+                 elif typer == USER3:
+                     USER3.userPassword = passwordNEW
+                 elif typer == USER4:
+                     USER4.userPassword = passwordNEW
+                 elif typer == USER5:
+                     USER5.userPassword = passwordNEW
+                 else:
+                     app.warn("Uh oh!", "That is incorrect. Please retry.")
+                     return
+             else:
+                     app.warn("Uh oh!", "That is incorrect. Please retry.")
+                     return
 
-    else: 
+         else:
+                     app.warn("Uh oh!", "That is incorrect. Please retry.")
+                     return
+
+    else:
        app.warn("Uh oh!", "That is incorrect. Please retry.")
        return
 
