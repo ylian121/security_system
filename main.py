@@ -2,6 +2,7 @@
 # function to get new user and test
 from new_user import capture_new_user, facial_recognition
 from faceRec import face_recognition
+from peopleDetectionFunction import detect_people
 
 import cv2
 import os
@@ -26,6 +27,8 @@ while True:
         # testing to see if new user is added
         facial_recognition()
     elif choice == "2":
+        #check for person
+        detect_people()
         # live time face recognition
         face_recognition()
     elif choice == "3":
