@@ -32,3 +32,38 @@ def save user_data(data):
 user_data = load_user_data()
 
 #load data when program starts
+
+#check password requirements:
+def check_password_requirements(password1, password2):
+
+    if len(password1) < 8:
+        print("Password must be at least 8 characters long.")
+        return False
+
+    if password1 != password2:
+        print("Passwords do not match.")
+        return False
+
+    print("Password is valid.")
+    return True
+
+#check pincode requirements:
+def check_pincode_requirements(pincode):
+    # Check if the pincode is at most 6 characters long
+    if len(pincode) > 6:
+        print("Pincode must be at most 6 characters long.")
+        return False
+
+    # Check if the pincode contains only numbers
+    if not pincode.isdigit():
+        print("Pincode must contain only numbers.")
+        return False
+
+    # Check for no repeated numbers next to each other
+    for i in range(len(pincode) - 1):
+        if pincode[i] == pincode[i + 1]:
+            print("Pincode must not have repeated numbers next to each other.")
+            return False
+
+    print("Pincode is valid.")
+    return True
