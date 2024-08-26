@@ -284,6 +284,19 @@ def ARM():
     app.warn("System armed!")
     recognize_speaker()
     face_recognition()
+    '''Outline
+    1. log out of their account
+    2. turn on face and voice recognition
+    3. When system is armed a person is detected:
+        1. can we recognize their face?
+            yes: no alarm
+            no: go to step 2
+                2. can we recognize their voice?
+                    yes: return to system armed
+                    no: set off alarm
+                        3. user has 30 seconds to turn off alarm using pincode that will populate the LCD
+    4. when the system is disarmed: log in screen populates the LCD
+    '''
     
 def DISARM():
    # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
