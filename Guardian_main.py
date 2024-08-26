@@ -360,10 +360,12 @@ def main_menu_2():
      button5.visible = 1
      button6.visible = 1
      button7.visible = 1
+    
 def main_menu_3():
     # button1 = PushButton(app, command=changePassword, text="Change Password", width=10,height=3)
     button3.visible = 1
     button7.visible = 1
+    
 def addNewUser(tempUser):
     # button1.visible = 0
       # button1.visible = 0
@@ -379,11 +381,13 @@ def addNewUser(tempUser):
                        tempUser = user()
                        if temp == password:
                            tempUser.set_profile(username, password, permLevelNEW)
-                           enroll_speaker()
-                           print("Speaker successfully enrolled")
+                           #app.warn("The next step is to enroll your voice. Please speak for ")
+                           #enroll_speaker()
+                           #print("Speaker successfully enrolled")
+                           #app.warn("Speaker successfully enrolled")
                            #app.warn("Speaker enrolled")
-                           capture_new_user()
-                           print("User's face enrolled")
+                           #capture_new_user()
+                           #print("User's face enrolled")
                            print(tempUser.name)
                            return tempUser
                    else: 
@@ -397,6 +401,14 @@ def addNewUser(tempUser):
     return tempUser'''
 
     #button2.visible = 0
+def enroll_new_user_face_voice():
+    app.warn("We will now enroll your face and voice into the program. Please begin speaking now and do not stop until the program has successfully enrolled you.")
+    enroll_speaker()
+    app.warn("Speaker successfully enrolled")
+    app.warn("The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
+    capture_new_user()
+    print("User's face enrolled")
+    
 def removeUser():
     #print("END")
     usernameRemove = app.question("Please type in the username of the user whom you would like to delete: ", "USERNAME: ", initial_value=None)
