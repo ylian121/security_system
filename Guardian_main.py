@@ -301,6 +301,12 @@ def ARM():
 def DISARM():
    # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
    app.warn("System Successfully Disarmed!")
+    '''outline
+    1. click diarm button on screen
+    2. scan face
+    3. if admin or authorized user: keypad will pop up
+    4. else set off alarm
+    '''
 ##################################################################
 app = App(title="GISS")
 message = Text(app, text="Guardian Interactive Security System!")
