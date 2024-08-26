@@ -10,6 +10,47 @@ import sys
 import keyring.backend
 #from tkinter import messagebox
 #from tkinter import *
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+def SENDEMAIL(email):
+    # Email details
+    sender_email = "pajaka755@gmail.com"
+    receiver_email = email
+   # print(receiver_email)
+    subject = "Test Email"
+    body = "This is a test email sent from a Python script."
+
+# SMTP server configuration (Example for Gmail)
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    password = "seniordesign1)1"  # You might need to use an app-specific password for Gmail
+
+# Create the email
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+
+# Attach the email body to the message
+    msg.attach(MIMEText(body, 'plain'))
+
+# Send the email
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Secure the connection
+        server.login(sender_email, password)
+        text = msg.as_string()
+        server.sendmail(sender_email, receiver_email, text)
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        server.quit()
+
+
 """
 #KEYRING
 class TestKeyring(keyring.backend.KeyringBackend):
@@ -157,7 +198,7 @@ class KeypadWindow:
 
     def keypad_input(self, i):
         if i < 10:  # Digit button pressed
-            if len(self.passcode) < 4:  # Limit to 4 digits
+            if len(self.passcode) < 6:  # Limit to 6 digits
                 if self.passcode == "0":
                     self.passcode = ""
                 self.passcode += str(i)
@@ -166,7 +207,7 @@ class KeypadWindow:
             self.passcode = "0"
             self.update_result()
         elif i == 11:  # Submit button
-            if len(self.passcode) == 4:
+            if len(self.passcode) == 6:
                 if self.passcode == self.correct_pin:
                     self.window.info("Success", "Correct PIN entered!")
                     self.window.hide()
@@ -175,7 +216,7 @@ class KeypadWindow:
                 self.passcode = "0"
                 self.update_result()
             else:
-                self.result.value = "Enter 4 digits"
+                self.result.value = "Enter 6 digits"
 
     def update_result(self):
         self.result.clear()
@@ -221,7 +262,7 @@ class SetupWindow:
 
     def keypad_input(self, i):
         if i < 10:  # Digit button pressed
-            if len(self.passcode) < 4:  # Limit to 4 digits
+            if len(self.passcode) < 6:  # Limit to 6 digits
                 if self.passcode == "0":
                     self.passcode = ""
                 self.passcode += str(i)
@@ -230,14 +271,14 @@ class SetupWindow:
             self.passcode = "0"
             self.update_result()
         elif i == 11:  # Submit button
-            if len(self.passcode) == 4:
+            if len(self.passcode) == 6:
                 self.keypad_window.set_correct_pin(self.passcode)
                 self.window.info("Success", f"PIN {self.passcode} has been set!")
                 self.pin_set = True  # Mark the PIN as set
                 self.window.hide()
                 ADMIN_menu()
             else:
-                self.result.value = "Enter 4 digits"
+                self.result.value = "Enter 6 digits"
 
     def update_result(self):
         self.result.clear()
@@ -305,7 +346,11 @@ def checker(inp, inp2):
 
 def login():
     username = app.question("Please type in your username", "USERNAME: ", initial_value=None)
-    password = app.question("Please type in your password", "PASSWORD: ", initial_value=None)
+    if username is not None and username != "":
+        password = app.question("Please type in your password", "PASSWORD: ", initial_value=None)
+    else:
+        return
+
    # global temper
    # temper = user()
     temper = checker(username, password)
@@ -400,14 +445,21 @@ def addNewUser(tempUser):
            temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
            if temp is not None and temp != "":
                permLevelNEW = app.question("Please type in a permission level: ", "Permission Level (2 or 3): ", initial_value=None)    
-               if permLevelNEW is not None and permLevelNEW != "":              
-                   tempUser = user()
-
+               if permLevelNEW is not None and permLevelNEW != "":
+                   if permLevelNEW == "2" or permLevelNEW == "3":              
+                       tempUser = user()
+                       if temp == password:
+                           tempUser.set_profile(username, password, permLevelNEW)
+                           print(tempUser.name)
+                           return tempUser
+                   else: 
+                       app.warn("Error! User not saved!", "Please only enter the number 2 or 3")
+"""
                if temp == password:
                     tempUser.set_profile(username, password, permLevelNEW)
                     print(tempUser.name)
                     return tempUser
-
+"""
     #button2.visible = 0
 def removeUser():
     #print("END")
@@ -430,7 +482,8 @@ def changePassword():
    # temper = user()
     typer = user()
     passwordCURRENT = app.question("Please type in your current password", "CURRENT PASSWORD: ", initial_value=None)
-   # if temper.userPassword == passwordCURRENT:    
+   # if temper.userPassword == passwordCURRENT:
+   # if passwordCURRENT is not None and passwordCURRENT != "":    
     if passwordCURRENT == admin.userPassword:
         typer = admin
     elif passwordCURRENT == USER1.userPassword:    
@@ -449,14 +502,16 @@ def changePassword():
    # else: 
     #        app.warn("Uh oh!", "Warning: attempted to change password of wrong account")
      #       return
+
+
     if passwordCURRENT is not None and passwordCURRENT != "":
          passwordNEW = app.question("Please type in your new password", "NEW PASSWORD: ", initial_value=None)
          if passwordNEW is not None and passwordNEW != "":
              passwordREENTER = app.question("Please re-enter your new password", "RE-ENTER NEW PASSWORD: ", initial_value=None)
              if passwordNEW == passwordREENTER:
-                 if typer == admin:
+                 if typer == admin: 
                      admin.userPassword = passwordNEW
-                 elif typer == USER1:
+                 elif typer == USER1: 
                      USER1.userPassword = passwordNEW
                  elif typer == USER2:
                      USER2.userPassword = passwordNEW
@@ -466,18 +521,18 @@ def changePassword():
                      USER4.userPassword = passwordNEW
                  elif typer == USER5:
                      USER5.userPassword = passwordNEW
-                 else:
+                 else: 
                      app.warn("Uh oh!", "That is incorrect. Please retry.")
                      return
-             else:
-                     app.warn("Uh oh!", "That is incorrect. Please retry.")
-                     return
-
-         else:
+             else: 
                      app.warn("Uh oh!", "That is incorrect. Please retry.")
                      return
 
-    else:
+         else: 
+                     app.warn("Uh oh!", "That is incorrect. Please retry.")
+                     return
+
+    else: 
        app.warn("Uh oh!", "That is incorrect. Please retry.")
        return
 
@@ -607,7 +662,7 @@ global USER3
 global USER4
 global USER5
 global tempUSER
-global PIN
+global adminEMAIL
 
 master_box = Box(app, layout="auto", width="fill", height="fill")
 column1 = Box(master_box, align="left")
@@ -624,15 +679,34 @@ tempUSER = user()
 
 
 ADMIN_username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
-ADMIN_password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
-temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
-if temp == ADMIN_password:
-    admin.set_profile(ADMIN_username, ADMIN_password, "1")
-    message3 = Text(app, f"Hi {admin.name}!, Welcome to GISS! For security reasons we will make you login once again.", visible = 0)
-    say_my_name()
+if ADMIN_username is not None and ADMIN_username != "":
+    ADMIN_password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
+    if ADMIN_password is not None and ADMIN_password != "":    
+        temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
+        if temp == ADMIN_password:
+            admin.set_profile(ADMIN_username, ADMIN_password, "1")
+            message3 = Text(app, f"Hi {admin.name}!, Welcome to GISS! For security reasons we will make you login once again.", visible = 0)
+            say_my_name()
+            adminEMAIL = app.question("Please enter a GMAIL to link with your account", "GMAIL: ", initial_value=None)
+            if '@gmail.com' in adminEMAIL or '@outlook.com' in adminEMAIL or '@yahoo.com' in adminEMAIL:
+                app.info("Success!", "Account Created")
+                #SENDEMAIL(adminEMAIL)
+            else:
+                app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
+                close_gui()
+           
+        else: 
+            app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
+            close_gui()
+    else: 
+        app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
+        close_gui()
 else: 
     app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
-app.warn("PIN", "Please type in a 4 digit PINCODE that all authorized members will use to arm/disarm the system")
+    close_gui()
+
+
+app.warn("PIN", "Please type in a 6 digit PINCODE with no repeating digits that all authorized members will use to arm/disarm the system")
 open_setup()
 #setup_button = PushButton(app, text="Setup PIN", command=open_setup)
 """
