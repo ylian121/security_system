@@ -23,7 +23,7 @@ def SENDEMAIL(email):
     receiver_email = email
    # print(receiver_email)
     subject = "Test Email"
-    body = "This is a test email sent from a Python script."
+    body = "Hello, here is the live feed for the Guardian Interactive Security System (GISS):"
 
 # SMTP server configuration (Example for Gmail)
     smtp_server = "smtp.gmail.com"
