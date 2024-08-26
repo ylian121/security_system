@@ -1,27 +1,39 @@
+import numpy as np
 import cv2
+ 
+# the HOG descriptor/person detector
+hog = cv2.HOGDescriptor()
+hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
-human_cascade = cv2.CascadeClassifier('haarcascade_fullbody.xml')
 
-#capture video from cam
+# Load Camera
 cap = cv2.VideoCapture(0)
 
-while True:
 
-    _, img = cap.read()
+while(True):
+    ret, frame = cap.read()
 
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    # resizing
+    frame = cv2.resize(frame, (640, 480))
+    # using a greyscale picture
+    gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
-    #the bigger the numbers, the most accurate
-    humans = human_cascade.detectMultiScale(gray, 1.1, 20)
+    # detect people in the image
+    boxes, weights = hog.detectMultiScale(frame, winStride=(8,8) )
 
-    for (x, y, w, h) in humans:
-        cv2.rectangle(img, (x,y), (x+w, y+h), (255, 0, 0), 2)
+    boxes = np.array([[x, y, x + w, y + h] for (x, y, w, h) in boxes])
 
-    cv2.imshow('img', img)
+    for (xA, yA, xB, yB) in boxes:
+        # display the detected people
+        cv2.rectangle(frame, (xA, yA), (xB, yB),(0, 255, 0), 2)
     
+    cv2.imshow("Frame", frame)
+
     k = cv2.waitKey(30) & 0xff
 
-    if k==27:
+    if k == 27:
         break
 
+
 cap.release()
+cv2.destroyAllWindows()
