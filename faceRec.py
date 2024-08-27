@@ -61,6 +61,7 @@ def face_recognition(folder="faces"):
     cv2.destroyAllWindows()
 
 
+
 recognized = face_recognition()
 if recognized:
     print(f"First recognized person: {recognized}")
