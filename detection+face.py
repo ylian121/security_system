@@ -1,19 +1,18 @@
 import numpy as np
 import cv2
 
+from faceRec import face_recognition
+
 def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
     # HOG descriptor/person detector
     hog = cv2.HOGDescriptor()
     hog.setSVMDetector(cv2.HOGDescriptor_getDefaultPeopleDetector())
 
     # Load Camera or Video
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(video_source)
 
     while True:
         ret, frame = cap.read()
-
-        if not ret:
-            break
 
         # resizing
         frame = cv2.resize(frame, window_size)
@@ -25,15 +24,10 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
 
         boxes = np.array([[x, y, x + w, y + h] for (x, y, w, h) in boxes])
 
-        if len(boxes) > 0:
-            # If a person is detected, return True
-            cap.release()
-            cv2.destroyAllWindows()
-            return True
-
         for (xA, yA, xB, yB) in boxes:
             # display the detected people
             cv2.rectangle(frame, (xA, yA), (xB, yB), (0, 255, 0), 2)
+            face_recognition()
 
         cv2.imshow("Frame", frame)
 
@@ -46,5 +40,4 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
     cap.release()
     cv2.destroyAllWindows()
 
-    # Return False if no person is detected
-    return False
+detect_people()
