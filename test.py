@@ -58,7 +58,7 @@ def SENDEMAIL(email):
 #KEYRING
 class TestKeyring(keyring.backend.KeyringBackend):
     #A test keyring which always outputs same password
-
+    
     def supported(self): return 0
     def set_password(self, servicename, username, password): return 0
     def get_password(self, servicename, username):
@@ -100,13 +100,14 @@ def ADMIN_menu_SETUP():
    ADMIN_username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
    ADMIN_password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
    temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
-if temp == ADMIN_password:
-        temp1.set_profile(ADMIN_username, ADMIN_password, 1)
-#       return temp1
+
+   if temp == ADMIN_password:
+   	temp1.set_profile(ADMIN_username, ADMIN_password, 1)
+#	return temp1
 
    else:
-#       message3 = Text(app, text="Please retry. The system will turn off now. Start back up the system to try again.")
-#       close_gui()
+#	message3 = Text(app, text="Please retry. The system will turn off now. Start back up the system to try again.")
+#	close_gui()
         app.warn("Uh oh!", "You are almost out of biscuits!")
 
    message3 = Text(app, text="TEMP")
@@ -147,6 +148,8 @@ def logout():
     global message21
     button8 = PushButton(app, command=login, text="LOGIN", width=10,height=3)
     message21.visible = 0
+
+
 def buttonsRESET():
     button1.visible = 0
     button2.visible = 0
@@ -164,7 +167,7 @@ def buttonsDISPLAY():
     button5.visible = 1
   #  button6.visible = 1
     button7.visible = 1
-
+  
 
 def close_gui():
   sys.exit()
@@ -279,7 +282,7 @@ class SetupWindow:
         self.button[11].text_size = 40
 
     def keypad_input(self, i):
-
+        
         if i < 10:  # Digit button pressed
             if len(self.passcode) < 6:  # Limit to 6 digits
                 if self.passcode == "0":
@@ -316,11 +319,13 @@ def open_setup():
     app.after(10000, open_setup)
 
     if setup_window.pin_set:  # If the PIN is set, proceed
-        return True
+        return True     
        #print("PIN has been set. Proceeding...")
     else:
         app.after(10000, open_setup)  # Keep checking every 100ms
         return False
+
+
 def check_pin_set():
     if setup_window.pin_set:  # If the PIN is set, proceed
         print("PIN has been set. Proceeding...")
@@ -403,7 +408,7 @@ def create_new_user():
        USER4 = x
     elif USER5.name == "":
        USER5 = x
-    else:
+    else: 
        app.warn("Uh oh!", "Sorry! No more space for new users. Remove a User to be able to add one.")
        return
 
@@ -440,9 +445,9 @@ def ADMIN_menu():
      button7 = PushButton(app, command=logout, text="LOGOUT", width=10,height=3)
 
 
-def main_menu_2():
+def main_menu_2(): 
      #button1 = PushButton(app, command=changePassword, text="Change Password", width=10,height=3)
-
+    
      #button2 = PushButton(app, command=ARM, text="ARM GISS", width=10,height=3)
      #button3 = PushButton(app, command=DISARM, text="DISARM GISS", width=10,height=3)
      button3.visible = 1
@@ -456,20 +461,20 @@ def main_menu_3():
 def addNewUser(tempUser):
     # button1.visible = 0
     username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
-    if username is not None and username != "":
+    if username is not None and username != "": 
        password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
        if password is not None and password != "":
            temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
            if temp is not None and temp != "":
-               permLevelNEW = app.question("Please type in a permission level: ", "Permission Level (2 or 3): ", initial_value=None)
+               permLevelNEW = app.question("Please type in a permission level: ", "Permission Level (2 or 3): ", initial_value=None)    
                if permLevelNEW is not None and permLevelNEW != "":
-                   if permLevelNEW == "2" or permLevelNEW == "3":
+                   if permLevelNEW == "2" or permLevelNEW == "3":              
                        tempUser = user()
                        if temp == password:
                            tempUser.set_profile(username, password, permLevelNEW)
                            print(tempUser.name)
                            return tempUser
-                   else:
+                   else: 
                        app.warn("Error! User not saved!", "Please only enter the number 2 or 3")
 """
                if temp == password:
@@ -491,7 +496,7 @@ def removeUser():
         USER4.set_profile("", "", "")
     elif usernameRemove == USER5.name:
         USER5.set_profile("", "", "")
-    else:
+    else: 
         app.warn("Uh oh!", "No Users in system! Unable to Remove")
         return
 def changePassword():
@@ -500,10 +505,10 @@ def changePassword():
     typer = user()
     passwordCURRENT = app.question("Please type in your current password", "CURRENT PASSWORD: ", initial_value=None)
    # if temper.userPassword == passwordCURRENT:
-   # if passwordCURRENT is not None and passwordCURRENT != "":
+   # if passwordCURRENT is not None and passwordCURRENT != "":    
     if passwordCURRENT == admin.userPassword:
         typer = admin
-    elif passwordCURRENT == USER1.userPassword:
+    elif passwordCURRENT == USER1.userPassword:    
         typer = USER1
     elif passwordCURRENT == USER2.userPassword:
         typer = USER2
@@ -516,7 +521,7 @@ def changePassword():
     else:
         app.warn("Uh oh!", "That is incorrect. Please retry.")
         return
-   # else:
+   # else: 
     #        app.warn("Uh oh!", "Warning: attempted to change password of wrong account")
      #       return
 
@@ -526,9 +531,9 @@ def changePassword():
          if passwordNEW is not None and passwordNEW != "":
              passwordREENTER = app.question("Please re-enter your new password", "RE-ENTER NEW PASSWORD: ", initial_value=None)
              if passwordNEW == passwordREENTER:
-                 if typer == admin:
+                 if typer == admin: 
                      admin.userPassword = passwordNEW
-                 elif typer == USER1:
+                 elif typer == USER1: 
                      USER1.userPassword = passwordNEW
                  elif typer == USER2:
                      USER2.userPassword = passwordNEW
@@ -538,18 +543,18 @@ def changePassword():
                      USER4.userPassword = passwordNEW
                  elif typer == USER5:
                      USER5.userPassword = passwordNEW
-                 else:
+                 else: 
                      app.warn("Uh oh!", "That is incorrect. Please retry.")
                      return
-             else:
-                     app.warn("Uh oh!", "That is incorrect. Please retry.")
-                     return
-
-         else:
+             else: 
                      app.warn("Uh oh!", "That is incorrect. Please retry.")
                      return
 
-    else:
+         else: 
+                     app.warn("Uh oh!", "That is incorrect. Please retry.")
+                     return
+
+    else: 
        app.warn("Uh oh!", "That is incorrect. Please retry.")
        return
 
@@ -570,7 +575,7 @@ def changePermissions():
     elif permissionsRemove == USER5.name:
        permissionsNEW = app.question("Please type in the new permission level (2 or 3)", "NEW PERMISSION LEVEL: ", initial_value=None)
        USER5.permission_level = permissionsNEW
-    else:
+    else: 
        app.warn("Uh oh!", "That is an invalid username. Please retry.")
        return
 def ARM():
@@ -594,7 +599,7 @@ def ARM():
         app.warn("Uh oh!", "That is incorrect. Please retry.")
         return
     """
-    #keypad_window = KeypadWindow(app)
+    #keypad_window = KeypadWindow(app)    
     #open_button = PushButton(app, text="Open Keypad", command=open_keypad)
     #FACEID & VOICE ID CHECK
     #buttonsRESET()
@@ -607,18 +612,18 @@ def ARM():
     open_keypad()
     #message21.visible = 0
 """
-    if AUTHORIZED FACE:
+    if AUTHORIZED FACE: 
         open_keypad()
-        if disarm == True:
+        if disarm == True: 
             logout()
-    if PEDESTRIAN BUT NO FACE:
+    if PEDESTRIAN BUT NO FACE: 
         voice
-        if not voice:
+	if not voice:
             open_keypad()
         else:
             ALARM
-    if NOT AUTHORIZED FACE:
-         #ALARM
+    if NOT AUTHORIZED FACE: 
+         #ALARM   
 """
 
  #app.warn("SUCCESS!", "SYSTEM ARMED")
@@ -686,6 +691,7 @@ button.append(PushButton(keypad_button, text="⏎", grid=[0,4,3,4], padx=120, co
 button[10].text_size = 40
 button[11].text_size = 40
 result = Text(keypad_result, text="0", size=40)
+
 keyyy.display()
 """
 
@@ -702,7 +708,7 @@ global USER4
 global USER5
 global tempUSER
 global adminEMAIL
-#global disarm
+#global disarm 
 #disarm = True
 
 master_box = Box(app, layout="auto", width="fill", height="fill")
@@ -722,7 +728,7 @@ tempUSER = user()
 ADMIN_username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
 if ADMIN_username is not None and ADMIN_username != "":
     ADMIN_password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
-    if ADMIN_password is not None and ADMIN_password != "":
+    if ADMIN_password is not None and ADMIN_password != "":    
         temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
         if temp == ADMIN_password:
             admin.set_profile(ADMIN_username, ADMIN_password, "1")
@@ -735,14 +741,14 @@ if ADMIN_username is not None and ADMIN_username != "":
             else:
                 app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
                 close_gui()
-
-        else:
+           
+        else: 
             app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
             close_gui()
-    else:
+    else: 
         app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
         close_gui()
-else:
+else: 
     app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
     close_gui()
 
@@ -751,9 +757,9 @@ app.warn("PIN", "Please type in a 6 digit PINCODE with no repeating digits that 
 open_setup()
 
 """
-while True:
+while True: 
    print("Blah!")
-sleep(10)
+   sleep(10)
 """
 
 #setup_button = PushButton(app, text="Setup PIN", command=open_setup)
@@ -761,7 +767,7 @@ sleep(10)
 if open_setup() == True:
     print("I THINK")
 
-else:
+else: 
     if temp == ADMIN_password:
         admin.set_profile(ADMIN_username, ADMIN_password, "1")
         message3 = Text(app, f"Hi {admin.name}!, Welcome to GISS! For security reasons we will make you login once again.", visible = 0)
