@@ -70,5 +70,6 @@ def face_recognition(folder="faces"):
 
     cap.release()
     cv2.destroyAllWindows()
+    return False
 
 
