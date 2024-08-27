@@ -7,8 +7,13 @@ import cv2
 import os
 from simple_facerec import SimpleFacerec
 
-while True:
+
+# link to the notification page
+#https://raw.githubusercontent.com/PajakaL/CS179J-Pajaka-Parnika-Yongyan-Briana/master/notification.json?token=GHSAT0AAAAAACQQCKKWXPD2LZUCGW2NHSSEZWNHMLQ
+
+
+def send_email():
+    while True:
 
     # if motion is detected:
-        facial_recognition()
-        #print name
+        #print to json file

@@ -2,7 +2,7 @@ import cv2
 import os
 from simple_facerec import SimpleFacerec
 
-def capture_new_user(folder="faces"):
+def capture_new_user(name, folder="faces"):
     # Create folder if it doesn't exist
     if not os.path.exists(folder):
         os.makedirs(folder)
@@ -19,7 +19,6 @@ def capture_new_user(folder="faces"):
         k = cv2.waitKey(1) & 0xff
         if k == ord('c'):
             # Capture the photo
-            name = input("Enter the name for the captured face: ")
             filepath = os.path.join(folder, f"{name}.jpg")
             cv2.imwrite(filepath, frame)
             print(f"Photo saved as {filepath}")
