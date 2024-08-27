@@ -54,6 +54,44 @@ def SENDEMAIL(email):
     finally:
         server.quit()
 
+def SENDEMAILACTIVITY(email):
+    # Email details
+    sender_email = "pajaka755@gmail.com"
+    receiver_email = email
+    subject = "URGENT: GISS MOTION DETECTED"
+    body = "Hello, view the activity log here. Motion has been detected"
+
+    # SMTP server configuration (Example for Gmail)
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
+    password = "seniordesign1)1"  # Consider using an environment variable for the password
+
+    # Create the email
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+
+    # Attach the email body to the message
+    msg.attach(MIMEText(body, 'plain'))
+
+    # Attach the JSON file
+    attachment = MIMEText(json.dumps(activity_data), 'json')
+    attachment.add_header('Content-Disposition', 'attachment', filename="activity_log_file.json")
+    msg.attach(attachment)
+
+    # Send the email
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()  # Secure the connection
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, msg.as_string())
+        print("Email sent successfully!")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        server.quit()
+	    
 #Setting up the user class
 class user:
     def __init__(self):
