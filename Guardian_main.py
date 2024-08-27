@@ -3,7 +3,7 @@ from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+import threading
 #import encryption
 import saving_passwords
 #import files for voice
@@ -15,6 +15,8 @@ from faceRec import face_recognition
 import cv2
 import os
 from simple_facerec import SimpleFacerec
+
+global message21
 
 #Setting up the email for the live feed and activity log
 def SENDEMAIL(email):
@@ -89,7 +91,9 @@ def ADMIN_menu_SETUP():
 def logout():
     buttonsRESET()
     global button8
+    global message21
     button8 = PushButton(app, command=login, text="LOGIN", width=10,height=3)
+    message21.visible = 0
 
 
 def buttonsRESET():
@@ -98,7 +102,7 @@ def buttonsRESET():
     button3.visible = 0
     button4.visible = 0
     button5.visible = 0
-    button6.visible = 0
+    #button6.visible = 0
     button7.visible = 0
 
 def buttonsDISPLAY():
@@ -107,14 +111,14 @@ def buttonsDISPLAY():
     button3.visible = 1
     button4.visible = 1
     button5.visible = 1
-    button6.visible = 1
+    #button6.visible = 1
     button7.visible = 1
 
 def close_gui():
   sys.exit()
 
-def close_gui():
-  sys.exit()
+'''def close_gui():
+  sys.exit()'''
 
 class KeypadWindow:
     def __init__(self, app, title="Enter Passcode", visible = False):
@@ -122,6 +126,8 @@ class KeypadWindow:
         #self.window.full_screen = True
         self.passcode = ""
         self.correct_pin = None  # This will store the correct PIN set in the setup window
+        self.attempts = 0  # Track the number of attempts
+        self.max_attempts = 3  # Maximum allowed attempt
 
         # Create the keypad layout
         self.screen_keypad = Box(self.window, visible=True, width="fill")
@@ -145,6 +151,10 @@ class KeypadWindow:
         self.button[11].text_size = 40
 
     def keypad_input(self, i):
+        if self.attempts >= self.max_attempts:
+            self.result.value = "Locked Out"
+            return  # Prevent further input after max attempts
+            
         if i < 10:  # Digit button pressed
             if len(self.passcode) < 6:  # Limit to 6 digits
                 if self.passcode == "0":
@@ -159,16 +169,28 @@ class KeypadWindow:
                 if self.passcode == self.correct_pin:
                     self.window.info("Success", "Correct PIN entered!")
                     self.window.hide()
+                    logout()
                 else:
-                    self.window.error("Error", "Incorrect PIN. Please try again.")
-                self.passcode = "0"
-                self.update_result()
+                    self.attempts += 1
+                    if self.attempts >= self.max_attempts:
+                        self.result.value = "ALARM!"
+                        self.disable_keypad()
+                        #ALARM
+                    else:
+                        self.window.error("Error", "Incorrect PIN. Please try again.")
+                        self.passcode = "0"
+                        self.update_result()
             else:
                 self.result.value = "Enter 6 digits"
 
     def update_result(self):
         self.result.clear()
         self.result.append(self.passcode)
+        
+    def disable_keypad(self):
+        # Disable all buttons to prevent further input
+        for btn in self.button:
+            btn.disable()
 
     def show(self):
         self.passcode = "0"
@@ -274,11 +296,11 @@ def checker(inp, inp2):
 
 def login():
     username = app.question("Please type in your username", "USERNAME: ", initial_value=None)
-    password = app.question("Please type in your password", "PASSWORD: ", initial_value=None)
     if username is not None and username != "":
         password = app.question("Please type in your password", "PASSWORD: ", initial_value=None)
     else:
         return
+
    # global temper
    # temper = user()
     temper = checker(username, password)
@@ -290,7 +312,7 @@ def login():
     elif temper.permission_level == "3":
         main_menu_3()
     else:
-        app.warn("Uh oh!", "That is incorrect. Please retry.")
+        app.warn("Uh oh!", "Username/Password is incorrect. Please retry.")
         return
     button8.visible = 0
 
@@ -340,14 +362,14 @@ def ADMIN_menu():
      #button1 = PushButton(app, command=addNewUser, text="Add a New User", args=(x,), width=10, height=3)
      #xy = x
      global button1
-     button1 = PushButton(app, command=create_new_user, text="Add a New User", width=10, height=3, visible = 1)
+     button1 = PushButton(column1, command=create_new_user, text="Add a New User", width=10, height=3,  visible = 1)
      #print(xy.name)
 
-     button2 = PushButton(app, command=removeUser, text="Remove a User", width=10,height=3)
-     button3 = PushButton(app, command=changePassword, text="Change Password", width=10,height=3)
-     button4 = PushButton(app, command=changePermissions, text="Change Permissions", width=10,height=3)
-     button5 = PushButton(app, command=ARM, text="ARM GISS", width=10,height=3)
-     button6 = PushButton(app, command=DISARM, text="DISARM GISS", width=10,height=3)
+     button2 = PushButton(column2, command=removeUser, text="Remove a User", width=10,height=3)
+     button3 = PushButton(column2, command=changePassword, text="Change Password", width=10,height=3)
+     button4 = PushButton(column3, command=changePermissions, text="Change Permissions", width=10,height=3)
+     button5 = PushButton(column1, command=ARM, text="ARM GISS", width=10,height=3)
+   #  button6 = PushButton(column3, command=DISARM, text="DISARM GISS", width=10,height=3)
      button7 = PushButton(app, command=logout, text="LOGOUT", width=10,height=3)
 
 
@@ -358,7 +380,7 @@ def main_menu_2():
      #button3 = PushButton(app, command=DISARM, text="DISARM GISS", width=10,height=3)
      button3.visible = 1
      button5.visible = 1
-     button6.visible = 1
+     #button6.visible = 1
      button7.visible = 1
     
 def main_menu_3():
@@ -506,7 +528,11 @@ def changePermissions():
 #ADD NEW ARM FUNCTION HERE
 def ARM():
     #print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
-    app.warn("System armed!")
+    #app.warn("System armed!")
+    global message21
+    message21 = Text(app, text="SYSTEM ARMED!", visible = 1)
+    buttonsRESET()
+    open_keypad()
     recognize_speaker()
     detect_people()
     '''Outline
@@ -522,6 +548,20 @@ def ARM():
                         3. user has 30 seconds to turn off alarm using pincode that will populate the LCD
     4. when the system is disarmed: log in screen populates the LCD
     '''
+    """
+    if AUTHORIZED FACE: 
+        open_keypad()
+        if disarm == True: 
+            logout()
+    if PEDESTRIAN BUT NO FACE: 
+        voice
+	if not voice:
+            open_keypad()
+        else:
+            ALARM
+    if NOT AUTHORIZED FACE: 
+         #ALARM   
+"""
     
 def DISARM():
    # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
