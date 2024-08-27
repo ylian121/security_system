@@ -7,8 +7,7 @@ from email.mime.text import MIMEText
 #import encryption
 import saving_passwords
 #import files for voice
-from enroll_speaker import enroll_speaker
-from recognize_speaker import recognize_speaker
+from voice import enroll_speaker, recognize_speaker, delete_speaker
 #import files for face
 from new_user import capture_new_user, facial_recognition
 from faceRec import face_recognition
