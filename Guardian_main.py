@@ -425,10 +425,10 @@ def addNewUser(tempUser):
 
     #button2.visible = 0
 def enroll_new_user_face_voice(username):
-    app.warn("We will now enroll your face and voice into the program. Please begin speaking now and do not stop until the program has successfully enrolled you.")
+    app.warn("Info:", "We will now enroll your face and voice into the program. Please begin speaking now and do not stop until the program has successfully enrolled you.")
     enroll_speaker(username)
-    app.warn("Speaker successfully enrolled")
-    app.warn("The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
+    app.warn("Success!", "Speaker successfully enrolled")
+    app.warn("Info:", "The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
     button51 = PushButton(column3, command=capture_new_user(username), text="CAPTURE", width=10,height=3)
     #capture_new_user(username)
     print("User's face enrolled")
@@ -565,7 +565,7 @@ def ARM():
     
 def DISARM():
    # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
-   app.warn("System Successfully Disarmed!")
+   app.warn("Success!", "System Successfully Disarmed!")
     '''outline
     1. click diarm button on screen
     2. scan face
