@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
 
+#import time
+
 from faceRec import face_recognition
 
 def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
@@ -27,7 +29,10 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
         for (xA, yA, xB, yB) in boxes:
             # display the detected people
             cv2.rectangle(frame, (xA, yA), (xB, yB), (0, 255, 0), 2)
-            face_recognition()
+
+            print("Detecting people...")
+
+            #face_recognition()
 
         cv2.imshow("Frame", frame)
 
