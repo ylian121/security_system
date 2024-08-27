@@ -34,7 +34,7 @@ def face_recognition(folder="faces"):
     recognized_name = None
 
     start_time = datetime.now()
-    end_time = start_time + timedelta(seconds=20)
+    end_time = start_time + timedelta(seconds=10)
 
     while datetime.now() < end_time:
 
@@ -71,5 +71,4 @@ def face_recognition(folder="faces"):
     cap.release()
     cv2.destroyAllWindows()
     return False
-
 
