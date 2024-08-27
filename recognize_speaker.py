@@ -4,6 +4,8 @@ from pvrecorder import PvRecorder
 import os
 import math
 import struct
+from time import time
+from rgb import led_controller  # Import the LEDController instance
 
 def recognize_speaker():
 
@@ -37,6 +39,7 @@ def recognize_speaker():
     # Update: Sets a threshold (fixes issue with printing last store user regardless of audio input)
     RECOGNITION_THRESHOLD = 0.5  # May need to adjust
     VOLUME_THRESHOLD = 1000      # Microphone sensitivity
+    recognition_start_time = time() ##RGB
 
     try:
         while True:
@@ -50,8 +53,17 @@ def recognize_speaker():
                     highest_score_index = scores.index(highest_score)
                     if highest_score > RECOGNITION_THRESHOLD:
                         print(f"{profile_files[highest_score_index].split('_')[0]} is speaking.")
+                        led_controller.set_color((0, 0, 1))  # Set the LED to blue#RGB
                     else:
                         print("User not recognized.")
+                        led_controller.set_color((1, 0, 0))  # Set the LED to red#RGB
+                        led_controller.sound_alarm() #buzzer
+
+            if time() - recognition_start_time > 5:#RGB
+                print("Speaker recognition timed out.")#RGB
+                led_controller.set_color((1, 0, 1))  # Set the LED to red  # Turn the RGB light red for timeout#RGB
+                break  # Exit the loop after 5 seconds without recognition#RGB
+
             # If below the volume threshold, do nothing (silence)
     except KeyboardInterrupt:
         pass

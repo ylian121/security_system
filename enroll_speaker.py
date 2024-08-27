@@ -1,6 +1,7 @@
 # enroll_speaker.py
 import pveagle
 from pvrecorder import PvRecorder
+import os
 
 def enroll_speaker():
 
@@ -40,3 +41,12 @@ def enroll_speaker():
 
     recorder.delete()
     eagle_profiler.delete()
+
+def delete_speaker(speaker_name):
+    speaker_to_remove = f"{speaker_name}_profile.eagle"
+    
+    if os.path.exists(speaker_to_remove):
+        os.remove(speaker_to_remove)
+        print(f"Profile '{speaker_to_remove}' deleted successfully.")
+    else:
+        print(f"No profile found for '{speaker_name}'.")
