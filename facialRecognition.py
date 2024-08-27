@@ -3,6 +3,10 @@ import cv2
 import os
 import numpy as np
 
+# simple rec face support
+import face_recognition
+import glob
+
 
 # for time for facial
 from datetime import date, datetime, timedelta
