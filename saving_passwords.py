@@ -25,7 +25,7 @@ def load_user_data():
   return {}
 
 #save data to JSON
-def save user_data(data):
+def save_user_data(data):
   with open(user_info_file, 'w') as file:
     json.dump(data, file, indent = 4)
 
