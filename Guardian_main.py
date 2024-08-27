@@ -389,6 +389,7 @@ def addNewUser(tempUser):
                            #capture_new_user()
                            #print("User's face enrolled")
                            print(tempUser.name)
+                           enroll_new_user_face_voice(username)
                            return tempUser
                    else: 
                        app.warn("Error! User not saved!", "Please only enter the number 2 or 3")
@@ -401,12 +402,12 @@ def addNewUser(tempUser):
     return tempUser'''
 
     #button2.visible = 0
-def enroll_new_user_face_voice():
+def enroll_new_user_face_voice(username):
     app.warn("We will now enroll your face and voice into the program. Please begin speaking now and do not stop until the program has successfully enrolled you.")
-    enroll_speaker()
+    enroll_speaker(username)
     app.warn("Speaker successfully enrolled")
     app.warn("The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
-    capture_new_user()
+    capture_new_user(username)
     print("User's face enrolled")
     
 def removeUser():
@@ -569,6 +570,7 @@ if ADMIN_username is not None and ADMIN_username != "":
             if '@gmail.com' in adminEMAIL or '@outlook.com' in adminEMAIL or '@yahoo.com' in adminEMAIL:
                 app.info("Success!", "Account Created")
                 #SENDEMAIL(adminEMAIL)
+                enroll_new_user_face_voice(ADMIN_username)
             else:
                 app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
                 close_gui()
