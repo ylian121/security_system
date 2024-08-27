@@ -14,7 +14,9 @@ from voice import enroll_speaker, recognize_speaker, delete_speaker
 from facialRecognition import SimpleFacerec, turn_on_camera, face_recognition, delete_user, facial_recognition, detect_people, capture_new_user
 import cv2
 import os
-from simple_facerec import SimpleFacerec
+import numpy as np
+import face_recognition
+import glob
 
 global message21
 
