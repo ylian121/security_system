@@ -1,6 +1,10 @@
 import cv2
 from simple_facerec import SimpleFacerec
 
+from datetime import date, datetime, timedelta
+from time import sleep
+
+
 def turn_on_camera():
     # Load Camera
     cap = cv2.VideoCapture(0)
@@ -29,7 +33,14 @@ def face_recognition(folder="faces"):
 
     recognized_name = None
 
-    while True:
+    start_time = datetime.now()
+    end_time = start_time + timedelta(seconds=20)
+
+    while datetime.now() < end_time:
+
+        print(datetime.now())
+        sleep(1)
+        
         ret, frame = cap.read()
 
         # Detect Faces
@@ -61,9 +72,3 @@ def face_recognition(folder="faces"):
     cv2.destroyAllWindows()
 
 
-
-recognized = face_recognition()
-if recognized:
-    print(f"First recognized person: {recognized}")
-else:
-    print("No recognized faces.")
