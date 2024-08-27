@@ -2,7 +2,7 @@
 # function to get new user and test
 from new_user import capture_new_user, facial_recognition
 from delete_user import delete_user
-from faceRec import face_recognition
+from faceRec import face_recognition, turn_on_camera
 from peopleDetectionFunction import detect_people
 
 import cv2
@@ -12,6 +12,8 @@ from simple_facerec import SimpleFacerec
 # runs until exit
 # can constantly add new users into the system
 while True:
+
+    turn_on_camera()
 
     # option for the user to pick
     print("Choose an option:")
