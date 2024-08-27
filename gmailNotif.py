@@ -7,13 +7,27 @@ import cv2
 import os
 from simple_facerec import SimpleFacerec
 
+activity_log_file = 'activity_log_file.json'
 
-# link to the notification page
-#https://raw.githubusercontent.com/PajakaL/CS179J-Pajaka-Parnika-Yongyan-Briana/master/notification.json?token=GHSAT0AAAAAACQQCKKWXPD2LZUCGW2NHSSEZWNHMLQ
+def load_activity():
+    if os.path.exists(activity_info_file):
+    with open(user_info_file, 'r') as file:
+      return json.load(file)
+  return {}
 
+def save_activity(data):
+  with open(user_info_file, 'w') as file:
+    json.dump(data, file, indent = 4)
 
-def send_email():
-    while True:
+activity_data = load_activity()
+
+while True:
 
     # if motion is detected:
-        #print to json file
+        facial_recognition()
+        #print name
+    
+    attachment = MIMEText(json.dumps(data))
+    attachment.add_header('Content-Disposition', 'attachment', 
+                          filename="foo.name.json")
+    msg.attach(attachment)
