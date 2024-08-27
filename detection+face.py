@@ -33,7 +33,7 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
             #print("Detecting people...")
 
             face_recognition()
-            return True
+            return False
 
         cv2.imshow("Frame", frame)
 
