@@ -451,11 +451,8 @@ def removeUser():
         return
         
 def changePassword():
-   # global temper
-   # temper = user()
     typer = user()
     passwordCURRENT = app.question("Please type in your current password", "CURRENT PASSWORD: ", initial_value=None)
-   # if temper.userPassword == passwordCURRENT:    
     if passwordCURRENT == admin.userPassword:
         typer = admin
     elif passwordCURRENT == USER1.userPassword:    
@@ -471,8 +468,8 @@ def changePassword():
     else:
         app.warn("Uh oh!", "That is incorrect. Please retry.")
         return
-
-     if passwordCURRENT is not None and passwordCURRENT != "":
+	    
+    if passwordCURRENT is not None and passwordCURRENT != "":
          passwordNEW = app.question("Please type in your new password", "NEW PASSWORD: ", initial_value=None)
          if passwordNEW is not None and passwordNEW != "":
              passwordREENTER = app.question("Please re-enter your new password", "RE-ENTER NEW PASSWORD: ", initial_value=None)
@@ -535,7 +532,7 @@ def ARM():
     open_keypad()
     recognize_speaker()
     detect_people()
-    '''Outline
+    """Outline
     1. log out of their account
     2. turn on face 
     3. When system is armed a person is detected:
@@ -547,7 +544,7 @@ def ARM():
                     no: set off alarm
                         3. user has 30 seconds to turn off alarm using pincode that will populate the LCD
     4. when the system is disarmed: log in screen populates the LCD
-    '''
+    """
     """
     if AUTHORIZED FACE: 
         open_keypad()
@@ -561,17 +558,17 @@ def ARM():
             ALARM
     if NOT AUTHORIZED FACE: 
          #ALARM   
-"""
+    """
     
 """def DISARM():
    # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
    app.warn("Success!", "System Successfully Disarmed!")
-    '''outline
+    outline
     1. click diarm button on screen
     2. scan face
     3. if admin or authorized user: keypad will pop up
     4. else set off alarm
-    '''"""
+"""
 ##################################################################
 app = App(title="GISS")
 message = Text(app, text="Guardian Interactive Security System!")
