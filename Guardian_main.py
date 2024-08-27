@@ -504,7 +504,7 @@ def ARM():
     #print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
     app.warn("System armed!")
     recognize_speaker()
-    face_recognition()
+    detect_people()
     '''Outline
     1. log out of their account
     2. turn on face 
