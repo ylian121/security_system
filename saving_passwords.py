@@ -19,7 +19,7 @@ user_info_file = 'user_info.json'
 
 #Load data from JSON and create a new one if it doesn't already exist
 def load_user_data():
-  is os.path.exists(user_info_file):
+  if os.path.exists(user_info_file):
     with open(user_info_file, 'r') as file:
       return json.load(file)
   return {}
@@ -29,9 +29,8 @@ def save user_data(data):
   with open(user_info_file, 'w') as file:
     json.dump(data, file, indent = 4)
 
-user_data = load_user_data()
-
 #load data when program starts
+user_data = load_user_data()
 
 #check password requirements:
 def check_password_requirements(password1, password2):
