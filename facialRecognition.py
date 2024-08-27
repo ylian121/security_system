@@ -19,43 +19,6 @@ from email.mime.text import MIMEText
 import json
 
 # Function to send an email with a JSON file attached
-def SENDEMAIL(email):
-    # Email details
-    sender_email = "pajaka755@gmail.com"
-    receiver_email = email
-    subject = "URGENT: GISS MOTION DETECTED"
-    body = "Hello, view the activity log here. Motion has been detected"
-
-    # SMTP server configuration (Example for Gmail)
-    smtp_server = "smtp.gmail.com"
-    smtp_port = 587
-    password = "seniordesign1)1"  # Consider using an environment variable for the password
-
-    # Create the email
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = receiver_email
-    msg['Subject'] = subject
-
-    # Attach the email body to the message
-    msg.attach(MIMEText(body, 'plain'))
-
-    # Attach the JSON file
-    attachment = MIMEText(json.dumps(activity_data), 'json')
-    attachment.add_header('Content-Disposition', 'attachment', filename="activity_log_file.json")
-    msg.attach(attachment)
-
-    # Send the email
-    try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()  # Secure the connection
-        server.login(sender_email, password)
-        server.sendmail(sender_email, receiver_email, msg.as_string())
-        print("Email sent successfully!")
-    except Exception as e:
-        print(f"Error: {e}")
-    finally:
-        server.quit()
 
 # File paths
 activity_info_file = 'activity_log_file.json'
@@ -311,12 +274,10 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
             face_recog_result = face_recognition()
             if isinstance(face_recog_result, str):
                 # If face_recognition returns a string, save it in JSON format
-                result = {"motion_detected": face_recog_result}
+                result = {"person detected": face_recog_result}
                 save_activity(result)
-            else:
-                # If not a string, call voice_recognition
-                print("voice recognition"
-    
+                return    
+            
             return False
 
         cv2.imshow("Frame", frame)
