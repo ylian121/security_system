@@ -7,7 +7,7 @@ import threading
 #import encryption
 import saving_passwords
 #import files for voice
-import voice.py
+from voice import enroll_speaker, recognize_speaker, delete_speaker
 #import files for face
 from new_user import capture_new_user, facial_recognition
 from faceRec import face_recognition
