@@ -407,7 +407,8 @@ def enroll_new_user_face_voice(username):
     enroll_speaker(username)
     app.warn("Speaker successfully enrolled")
     app.warn("The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
-    capture_new_user(username)
+    button51 = PushButton(column3, command=capture_new_user(username), text="CAPTURE", width=10,height=3)
+    #capture_new_user(username)
     print("User's face enrolled")
     
 def removeUser():
