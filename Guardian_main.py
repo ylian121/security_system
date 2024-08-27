@@ -502,6 +502,8 @@ def changePermissions():
     else: 
        app.warn("Uh oh!", "That is an invalid username. Please retry.")
        return
+
+#ADD NEW ARM FUNCTION HERE
 def ARM():
     #print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
     app.warn("System armed!")
