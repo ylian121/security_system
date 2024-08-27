@@ -2,8 +2,8 @@ import cv2
 import os
 from simple_facerec import SimpleFacerec
 
-def delete_user(folder="faces"):
-    name = input("Enter the name of the user to delete: ")
+def delete_user(name, folder="faces"):
+    #name = input("Enter the name of the user to delete: ")
     filepath = os.path.join(folder, f"{name}.jpg")
     
     if os.path.exists(filepath):
