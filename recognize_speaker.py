@@ -5,7 +5,7 @@ import os
 import math
 import struct
 from time import time
-from rgb import led_controller  # Import the LEDController instance
+from led_alarm_servo import led_controller  # Import the LEDController instance
 
 def recognize_speaker():
 

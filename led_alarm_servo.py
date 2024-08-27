@@ -1,6 +1,9 @@
 # rgb.py
-from gpiozero import RGBLED, Buzzer
+from gpiozero import RGBLED, Buzzer, Servo, MotionSensor
 from time import sleep
+
+# System state
+armed = False
 
 class LEDController:
     _instance = None
@@ -8,8 +11,8 @@ class LEDController:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super(LEDController, cls).__new__(cls)
-            cls._instance.led = RGBLED(red=22, green=23, blue=24)  # Initialize the LED
-            cls._instance.buzzer = Buzzer(2)  # Initialize the Buzzer on GPIO 2
+            cls._instance.led = RGBLED(red=5, green=6, blue=21)  # Initialize the LED
+            cls._instance.buzzer = Buzzer(0)  # Initialize the Buzzer on GPIO 2
         return cls._instance
 
     def set_color(self, color):
