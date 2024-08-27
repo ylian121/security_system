@@ -30,6 +30,16 @@ def capture_new_user(name, folder="faces"):
     cap.release()
     cv2.destroyAllWindows()
 
+def delete_user(folder="faces"):
+    name = input("Enter the name of the user to delete: ")
+    filepath = os.path.join(folder, f"{name}.jpg")
+    
+    if os.path.exists(filepath):
+        os.remove(filepath)
+        print(f"{name}'s face image has been deleted.")
+    else:
+        print(f"No face image found for {name}.")
+
 def facial_recognition(folder="faces"):
     # Encode faces from the updated folder
     sfr = SimpleFacerec()
@@ -58,3 +68,4 @@ def facial_recognition(folder="faces"):
 
     cap.release()
     cv2.destroyAllWindows()
+
