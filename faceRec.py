@@ -1,6 +1,23 @@
 import cv2
 from simple_facerec import SimpleFacerec
 
+def turn_on_camera():
+    # Load Camera
+    cap = cv2.VideoCapture(0)
+
+    while True:
+        ret, frame = cap.read()
+
+        # Display the resulting frame
+        cv2.imshow("Camera Feed", frame)
+
+        k = cv2.waitKey(30) & 0xff
+        if k == 27:
+            break
+
+    cap.release()
+    cv2.destroyAllWindows()
+
 def face_recognition(folder="faces"):
     # Encode faces from the specified folder
     sfr = SimpleFacerec()
