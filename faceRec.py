@@ -34,7 +34,7 @@ def face_recognition(folder="faces"):
     recognized_name = None
 
     start_time = datetime.now()
-    end_time = start_time + timedelta(seconds=10)
+    end_time = start_time + timedelta(seconds=20)
 
     while datetime.now() < end_time:
 
