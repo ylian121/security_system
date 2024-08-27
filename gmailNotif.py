@@ -21,13 +21,20 @@ def save_activity(data):
 
 activity_data = load_activity()
 
-while True:
-
-    # if motion is detected:
-        facial_recognition()
+#if motion detected -> call face_recognition -> if face_recognition() == type.String -> string data = face_recognition() + "motion detected"
+        #face_recognition()
         #print name
+
+face_recog_result = face_recognition()
+if isinstance(face_recog_result, str):
+        # If face_recognition returns a string, print it in JSON format
+        result = {"motion detected": face_recog_result}
+        save_activity(result)
+    else:
+        # If not a string, call voice_recognition
+        voice_recognition()
     
-    attachment = MIMEText(json.dumps(data))
-    attachment.add_header('Content-Disposition', 'attachment', 
-                          filename="foo.name.json")
-    msg.attach(attachment)
+attachment = MIMEText(json.dumps(data))
+attachment.add_header('Content-Disposition', 'attachment', 
+                      filename="activity_log_file.json")
+msg.attach(attachment)
