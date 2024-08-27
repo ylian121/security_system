@@ -9,8 +9,9 @@ import saving_passwords
 #import files for voice
 from voice import enroll_speaker, recognize_speaker, delete_speaker
 #import files for face
-from new_user import capture_new_user, facial_recognition
-from faceRec import face_recognition
+#from new_user import capture_new_user, facial_recognition
+#from faceRec import face_recognition
+from facialRecognition import 
 import cv2
 import os
 from simple_facerec import SimpleFacerec
