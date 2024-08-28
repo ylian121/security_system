@@ -173,20 +173,20 @@ class KeypadWindow:
         self.keypad_result = Box(self.screen_keypad, width="fill", align="right")
 
         # Display the entered passcode
-        self.result = Text(self.keypad_result, text="0", size=40)
+        self.result = Text(self.keypad_result, text="0", size=30)
 
         # Create the buttons for the keypad
         self.button = []
         for i in range(0, 10):
             x = int((i + 2) % 3) if i else 0
             y = 3 - int((i + 2) / 3)
-            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=30, command=self.keypad_input, args=[i]))
-            self.button[i].text_size = 40
+            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=20, command=self.keypad_input, args=[i]))
+            self.button[i].text_size = 20
 
-        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=30, command=self.keypad_input, args=[10]))
+        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=20, command=self.keypad_input, args=[10]))
         self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2,3], padx=20, command=self.keypad_input, args=[11]))
-        self.button[10].text_size = 40
-        self.button[11].text_size = 40
+        self.button[10].text_size = 20
+        self.button[11].text_size = 20
 
     def keypad_input(self, i):
         if self.attempts >= self.max_attempts:
@@ -250,23 +250,23 @@ class SetupWindow:
         # Create the keypad layout
         self.screen_keypad = Box(self.window, visible=True, width="fill")
         self.keypad_button = Box(self.screen_keypad, layout="grid", width="fill", align="left")
-        self.keypad_result = Box(self.screen_keypad, width="fill", align="right")
+        self.keypad_result = Box(self.screen_keypad, width = "fill", align="left")
 
         # Display the entered passcode
-        self.result = Text(self.keypad_result, text="0", size=40)
+        self.result = Text(self.keypad_result, text="0", size=10, align = "left")
 
         # Create the buttons for the keypad
         self.button = []
         for i in range(0, 10):
             x = int((i + 2) % 3) if i else 0
             y = 3 - int((i + 2) / 3)
-            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=30, command=self.keypad_input, args=[i]))
-            self.button[i].text_size = 40
+            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=10, pady = 10, command=self.keypad_input, args=[i]))
+            self.button[i].text_size = 10
 
-        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=30, command=self.keypad_input, args=[10]))
-        self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2, 3], padx=20, command=self.keypad_input, args=[11]))
-        self.button[10].text_size = 40
-        self.button[11].text_size = 40
+        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=10, pady = 10, command=self.keypad_input, args=[10]))
+        self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2, 3], padx=10, pady = 10, command=self.keypad_input, args=[11]))
+        self.button[10].text_size = 10
+        self.button[11].text_size = 10
 
     def keypad_input(self, i):
         if i < 10:  # Digit button pressed
@@ -467,9 +467,10 @@ def enroll_new_user_face_voice(username):
     enroll_speaker(username)
     app.warn("Success!", "Speaker successfully enrolled")
     app.warn("Info:", "The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
-    button51 = PushButton(column3, command=capture_new_user(username), text="CAPTURE", width=10,height=3)
+    button51 = PushButton(app, command=capture_new_user(username), text="CAPTURE", width=10,height=3, visible = 1)
     #capture_new_user(username)
     print("User's face enrolled")
+    button51.visible = 0
     
 def removeUser():
     #print("END")
