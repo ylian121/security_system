@@ -15,6 +15,7 @@ import os
 import numpy as np
 import face_recognition
 import glob
+from remoteViewing import app
 
 global message21
 
@@ -635,6 +636,8 @@ USER2 = user()
 USER3 = user()
 USER4 = user()
 USER5 = user()
+
+app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
 
 ADMIN_username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
 if ADMIN_username is not None and ADMIN_username != "":
