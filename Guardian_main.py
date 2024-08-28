@@ -680,7 +680,7 @@ if ADMIN_username is not None and ADMIN_username != "":
             adminEMAIL = app.question("Please enter a GMAIL to link with your account", "GMAIL: ", initial_value=None)
             if '@gmail.com' in adminEMAIL or '@outlook.com' in adminEMAIL or '@yahoo.com' in adminEMAIL:
                 app.info("Success!", "Account Created")
-                #SENDEMAIL(adminEMAIL)
+                SENDEMAIL(adminEMAIL)
                 enroll_new_user_face_voice(ADMIN_username)
             else:
                 app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
