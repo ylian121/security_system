@@ -139,7 +139,7 @@ def turn_on_camera():
 
 
 # face recognition + print for activity log
-def faceRecognition(folder="faces"):
+def faceRecognition(folder="faces2"):
     # Encode faces from the specified folder
     sfr = SimpleFacerec()
     sfr.load_encoding_images(folder)
@@ -195,7 +195,7 @@ def faceRecognition(folder="faces"):
 
 
 # delete user
-def delete_user(name, folder="faces"):
+def delete_user(name, folder="faces2"):
     #name = input("Enter the name of the user to delete: ")
     filepath = os.path.join(folder, f"{name}.jpg")
     
@@ -210,7 +210,7 @@ def delete_user(name, folder="faces"):
 
 
 # face recognition without print for log
-def facial_recognition(folder="faces"):
+def facial_recognition(folder="faces2"):
     # Encode faces from the updated folder
     sfr = SimpleFacerec()
     sfr.load_encoding_images(folder)
@@ -294,7 +294,7 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
     cv2.destroyAllWindows()
 
 
-def capture_new_user(name, folder="faces"):
+def capture_new_user(name, folder="faces2"):
     # Create folder if it doesn't exist
     if not os.path.exists(folder):
         os.makedirs(folder)
