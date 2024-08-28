@@ -125,7 +125,7 @@ def turn_on_camera():
         ret, frame = cap.read()
 
         # Display the resulting frame
-        cv2.imshow("Camera Feed", frame)
+        #cv2.imshow("Camera Feed", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -180,7 +180,7 @@ def face_recognition(folder="faces"):
             cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 4)
 
-        cv2.imshow("Frame", frame)
+        #cv2.imshow("Frame", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -232,7 +232,7 @@ def facial_recognition(folder="faces"):
             cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 4)
 
-        cv2.imshow("Frame", frame)
+        #cv2.imshow("Frame", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -282,7 +282,7 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
             
             return False
 
-        cv2.imshow("Frame", frame)
+        #cv2.imshow("Frame", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -315,7 +315,7 @@ def capture_new_user(name, folder="faces"):
         print("Failed to capture image")
         return
     
-    cv2.imshow("Capture Face", frame)
+    #cv2.imshow("Capture Face", frame)
     print("Taking picture in 5 seconds...")
     
     time.sleep(5)  # Delay before taking the picture
