@@ -1,11 +1,10 @@
-#import libraries for UI
 from guizero import App, Box, TextBox, Window, Combo, Text, PushButton
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-import threading
+from threading import Thread
 #import encryption
-import saving_passwords
+#import saving_passwords
 #import files for voice
 from voice import enroll_speaker, recognize_speaker, delete_speaker
 #import files for face
@@ -15,7 +14,11 @@ import os
 import numpy as np
 import face_recognition
 import glob
-from remoteViewing import app
+import pveagle
+from pvrecorder import PvRecorder
+from alarm_components import arm_system, disarm_system, rotate_servo, check_motion, led_controller
+from gpiozero.pins.pigpio import PiGPIOFactory
+from gpiozero import Servo, MotionSensor
 
 global message21
 
@@ -206,7 +209,7 @@ class KeypadWindow:
         elif i == 11:  # Submit button
             if len(self.passcode) == 6:
                 if self.passcode == self.correct_pin:
-		    disarm()
+		    disarm_system()
                     self.window.info("Success", "Correct PIN entered! System Disarmed!")
                     self.window.hide()
                     #logout()
@@ -571,9 +574,9 @@ def ARM():
     message21 = Text(app, text="SYSTEM ARMED!", visible = 1)
     #buttonsRESET()
     #open_keypad()
-    arm()
-    recognize_speaker()
-    detect_people()
+    arm_system()
+    #recognize_speaker()
+    #detect_people()
     
     """Outline
     1. log out of their account
@@ -614,7 +617,19 @@ def DISARM():
     4. else set off alarm
 """
 ##################################################################
-app = App(title="GISS")
+#testing start threads here but move to after admin setup afterwards
+servo_thread = Thread(target=rotate_servo)
+servo_thread.daemon = True
+servo_thread.start()
+
+motion_thread = Thread(target=check_motion)
+motion_thread.daemon = True
+motion_thread.start()
+#end thread testing
+
+app = App(title="GISS", height = 320, width = 460)
+keypad_window = KeypadWindow(app)
+setup_window = SetupWindow(app, keypad_window)
 message = Text(app, text="Guardian Interactive Security System!")
 message2 = Text(app, text="Please set up your ADMIN profile to get started:")
 #button1 = PushButton(app, command=addNewUser, text="Add a New User", width=10,height=3, visible =0)
