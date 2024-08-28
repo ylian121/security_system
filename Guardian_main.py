@@ -482,24 +482,24 @@ def removeUser():
     usernameRemove = app.question("Please type in the username of the user whom you would like to delete: ", "USERNAME: ", initial_value=None)
     if usernameRemove == USER1.name:
         USER1.set_profile("", "", "")
-	delete_speaker(USER1.name)
-	delete_user(USER1.name)
+	delete_speaker(usernameRemove)
+	delete_user(usernameRemove)
     elif usernameRemove == USER2.name:
         USER2.set_profile("", "", "")
-	delete_speaker(USER2.name)
-	delete_user(USER2.name)
+	delete_speaker(usernameRemovee)
+	delete_user(usernameRemove)
     elif usernameRemove == USER3.name:
         USER3.set_profile("", "", "")
-	delete_speaker(USER3.name)
-	delete_user(USER3.name)
+	delete_speaker(usernameRemove)
+	delete_user(usernameRemove)
     elif usernameRemove == USER4.name:
         USER4.set_profile("", "", "")
-	delete_speaker(USER4.name)
-	delete_user(USER4.name)
+	delete_speaker(usernameRemove)
+	delete_user(usernameRemove)
     elif usernameRemove == USER5.name:
         USER5.set_profile("", "", "")
-	delete_speaker(USER5.name)
-	delete_user(USER5.name)
+	delete_speaker(usernameRemove)
+	delete_user(usernameRemove)
     else: 
         app.warn("Uh oh!", "No Users in system! Unable to Remove")
         return
