@@ -296,35 +296,35 @@ def capture_new_user(name, folder="faces"):
     # Create folder if it doesn't exist
     if not os.path.exists(folder):
         os.makedirs(folder)
-    
+
     # Initialize camera
     cap = cv2.VideoCapture(0)
     
-    print("Press 'c' to capture a photo, or 'q' to quit.")
+    if not cap.isOpened():
+        print("Error: Camera could not be opened.")
+        return
+
+    # Allow some time for the camera to adjust
+    time.sleep(2)  # Optional: Let the camera warm up
+
+    ret, frame = cap.read()
     
-    while True:
-
-        ret, frame = cap.read()
-
-        cv2.imshow("Capture Face", frame)
-        
-        k = cv2.waitKey(1) & 0xff
-
-        if k == ord('c'):
-
-            # Capture the photo
-            filepath = os.path.join(folder, f"{name}.jpg")
-
-            cv2.imwrite(filepath, frame)
-            print(f"Photo saved as {filepath}")
-
-            break
-        elif k == ord('q'):
-
-            print("Quitting without saving.")
-
-            break
+    if not ret:
+        print("Failed to capture image")
+        return
     
+    cv2.imshow("Capture Face", frame)
+    print("Taking picture in 5 seconds...")
+    
+    time.sleep(5)  # Delay before taking the picture
+
+    # Capture the photo
+    filepath = os.path.join(folder, f"{name}.jpg")
+    cv2.imwrite(filepath, frame)
+    
+    print(f"Photo saved as {filepath}")
+
+    # Release the camera and close any open windows
     cap.release()
     cv2.destroyAllWindows()
 
