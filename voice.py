@@ -5,6 +5,8 @@ import os
 import math
 import struct
 from time import time
+import pvporcupine
+import pvcheetah
 # from led_alarm_servo import led_controller  # Import the LEDController instance
 
 def enroll_speaker():
@@ -133,3 +135,57 @@ def calculate_rms(frame):
     shorts = struct.unpack(f'{count}h', frame_bytes)  # Unpack bytes back to a list of integers
     sum_squares = sum(s ** 2 for s in shorts)
     return math.sqrt(sum_squares / count)
+
+#### Added Wake Word and speech to text
+def listen_for_wake_word_and_password(access_key, keyword_path, expected_password, timeout=10):
+    # Initialize Porcupine for wake word detection
+    porcupine = pvporcupine.create(
+        access_key=access_key,
+        keyword_paths=[keyword_path]
+    )
+
+    # Initialize Cheetah for speech-to-text
+    cheetah = pvcheetah.create(access_key=access_key)
+
+    recorder = PvRecorder(device_index=-1, frame_length=porcupine.frame_length)
+    recorder.start()
+
+    try:
+        print("Listening for wake word...")
+        while True:
+            pcm = recorder.read()
+            keyword_index = porcupine.process(pcm)
+            if keyword_index >= 0:
+                print("Wake word detected! Listening for the voice password...")
+
+                # Start capturing and processing speech after wake word detection
+                transcript = ""
+                end_time = time.time() + timeout
+
+                while time.time() < end_time:
+                    pcm = recorder.read()
+                    partial_transcript, is_endpoint = cheetah.process(pcm)
+                    transcript += partial_transcript
+                    print(f"Partial Transcript: {partial_transcript}")
+                    
+                    # Check if the expected password is within the transcript
+                    if expected_password.lower() in transcript.lower():
+                        print("Voice password matched! Do something...")
+                        return True
+                
+                print("Voice password not detected within the time limit. Try again.")
+                return False
+            
+    finally:
+        recorder.stop()
+        recorder.delete()
+        porcupine.delete()
+        cheetah.delete()
+
+# Example function usage to start the listener as a thread in Guardian_main.py
+def start_voice_recognition_thread():
+    access_key = "UQOnRaJ10JVpaGU0XYreQaSBIV+JMUU387+IzalVU+C2U1bAyvC4EQ=="
+    keyword_path = "Hey-Guardian_en_windows_v3_0_0\\Hey-Guardian_en_windows_v3_0_0.ppn"
+    expected_password = "lock up"
+    
+    listen_for_wake_word_and_password(access_key, keyword_path, expected_password)

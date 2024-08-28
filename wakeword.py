@@ -24,7 +24,7 @@ try:
 
             # Start capturing and processing speech after wake word detection
             transcript = ""
-            timeout = 10  # 10 seconds to say the passcode
+            timeout = 15  # 10 seconds to say the passcode
             end_time = time.time() + timeout
             expected_password = "lock up"  # Replace with the actual voice password
 
