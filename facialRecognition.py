@@ -139,7 +139,7 @@ def turn_on_camera():
 
 
 # face recognition + print for activity log
-def face_recognition(folder="faces"):
+def faceRecognition(folder="faces"):
     # Encode faces from the specified folder
     sfr = SimpleFacerec()
     sfr.load_encoding_images(folder)
@@ -273,7 +273,7 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
 
             #print("Detecting people...")
 
-            face_recog_result = face_recognition()
+            face_recog_result = faceRecognition()
             if isinstance(face_recog_result, str):
                 # If face_recognition returns a string, save it in JSON format
                 result = {"person detected": face_recog_result}
