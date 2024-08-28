@@ -3,6 +3,8 @@ import cv2
 import os
 import numpy as np
 
+import time
+
 # simple rec face support
 import face_recognition
 import glob
