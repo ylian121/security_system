@@ -8,7 +8,7 @@ from threading import Thread
 #import files for voice
 from voice import enroll_speaker, recognize_speaker, delete_speaker
 #import files for face
-from facialRecognition import SimpleFacerec, turn_on_camera, face_recognition, delete_user, facial_recognition, detect_people, capture_new_user
+from facialRecognition import SimpleFacerec, turn_on_camera, faceRecognition, delete_user, facial_recognition, detect_people, capture_new_user
 import cv2
 import os
 import numpy as np
