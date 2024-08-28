@@ -587,6 +587,11 @@ servo_thread.start()
 motion_thread = Thread(target=check_motion)
 motion_thread.daemon = True
 motion_thread.start()
+
+
+voice_recognition_thread = Thread(target=start_voice_recognition_thread)
+voice_recognition_thread.daemon = True
+voice_recognition_thread.start()
 #end thread testing
 
 app = App(title="GISS")
