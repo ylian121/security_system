@@ -206,9 +206,10 @@ class KeypadWindow:
         elif i == 11:  # Submit button
             if len(self.passcode) == 6:
                 if self.passcode == self.correct_pin:
-                    self.window.info("Success", "Correct PIN entered!")
+		    disarm()
+                    self.window.info("Success", "Correct PIN entered! System Disarmed!")
                     self.window.hide()
-                    logout()
+                    #logout()
                 else:
                     self.attempts += 1
                     if self.attempts >= self.max_attempts:
@@ -568,10 +569,12 @@ def ARM():
     #app.warn("System armed!")
     global message21
     message21 = Text(app, text="SYSTEM ARMED!", visible = 1)
-    buttonsRESET()
-    open_keypad()
+    #buttonsRESET()
+    #open_keypad()
+    arm()
     recognize_speaker()
     detect_people()
+    
     """Outline
     1. log out of their account
     2. turn on face 
@@ -600,8 +603,9 @@ def ARM():
          #ALARM   
     """
     
-"""def DISARM():
-   # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
+def DISARM():
+    open_keypad()
+"""   # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
    app.warn("Success!", "System Successfully Disarmed!")
     outline
     1. click diarm button on screen
