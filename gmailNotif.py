@@ -1,4 +1,4 @@
-from facialRecognition import face_recognition
+from facialRecognition import faceRecognition
 
 import cv2
 import os
@@ -22,7 +22,7 @@ activity_data = load_activity()
         #face_recognition()
         #print name
 
-face_recog_result = face_recognition()
+face_recog_result = faceRecognition()
 if isinstance(face_recog_result, str):
         # If face_recognition returns a string, print it in JSON format
         result = {"motion detected": face_recog_result}
