@@ -472,7 +472,7 @@ def addNewUser(tempUser):
     username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
     if username is not None and username != "": 
        password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
-       if password is not None and password != "":
+       if password is not None and password != "" and len(password) >=8:
            temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
            if temp is not None and temp != "":
                permLevelNEW = app.question("Please type in a permission level: ", "Permission Level (2 or 3): ", initial_value=None)    
@@ -738,7 +738,7 @@ tempUSER = user()
 ADMIN_username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
 if ADMIN_username is not None and ADMIN_username != "":
     ADMIN_password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
-    if ADMIN_password is not None and ADMIN_password != "":    
+    if ADMIN_password is not None and ADMIN_password != "" and len(ADMIN_password) >= 8:    
         temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
         if temp == ADMIN_password:
             admin.set_profile(ADMIN_username, ADMIN_password, "1")
