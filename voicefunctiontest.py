@@ -1,6 +1,6 @@
-from enroll_speaker import enroll_speaker
+from voice import enroll_speaker
 # from recognize_speaker import recognize_speaker
-from enroll_speaker import delete_speaker
+from voice import delete_speaker
 # testing
 
 def main_menu():

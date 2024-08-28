@@ -2,7 +2,6 @@
 # Motion Servo Alarm RGB
 from gpiozero.pins.pigpio import PiGPIOFactory
 from threading import Thread
-from led_alarm_servo import led_controller
 from gpiozero import RGBLED, Buzzer, Servo, MotionSensor
 from time import sleep
 
@@ -53,7 +52,8 @@ def trigger_alarm():
 
 def check_motion():
     # Assign the trigger_alarm function to run when motion is detected
-    pir.when_motion = trigger_alarm
+#    pir.when_motion = trigger_alarm
+    pir.when_motion = 
 
 # System state
 armed = False
