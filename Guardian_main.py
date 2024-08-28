@@ -25,8 +25,8 @@ def SENDEMAIL(email):
     sender_email = "pajaka755@gmail.com"
     receiver_email = email
    # print(receiver_email)
-    subject = "Test Email"
-    body = "Hello, here is the live feed for the Guardian Interactive Security System (GISS):"
+    subject = "Welcome to the Guardian Interactive Security System!"
+    body = "Hello! We are so glad that you are using our top-notch security system! Here is the live feed for the Guardian Interactive Security System (GISS): http://172.20.10.11:5001/ .If you need a reminder of your PIN code, please call our help services number. Thank you! Your safety is our first concern!"
 
 # SMTP server configuration (Example for Gmail)
     smtp_server = "smtp.gmail.com"
@@ -60,7 +60,7 @@ def SENDEMAILACTIVITY(email):
     sender_email = "pajaka755@gmail.com"
     receiver_email = email
     subject = "URGENT: GISS MOTION DETECTED"
-    body = "Hello, view the activity log here. Motion has been detected"
+    body = "Hello, view the activity log here: http://172.20.10.11:5001/. Motion has been detected"
 
     # SMTP server configuration (Example for Gmail)
     smtp_server = "smtp.gmail.com"
@@ -141,7 +141,7 @@ def buttonsRESET():
     button3.visible = 0
     button4.visible = 0
     button5.visible = 0
-    #button6.visible = 0
+    button6.visible = 0
     button7.visible = 0
 
 def buttonsDISPLAY():
@@ -150,7 +150,7 @@ def buttonsDISPLAY():
     button3.visible = 1
     button4.visible = 1
     button5.visible = 1
-    #button6.visible = 1
+    button6.visible = 1
     button7.visible = 1
 
 def close_gui():
@@ -408,7 +408,7 @@ def ADMIN_menu():
      button3 = PushButton(column2, command=changePassword, text="Change Password", width=10,height=3)
      button4 = PushButton(column3, command=changePermissions, text="Change Permissions", width=10,height=3)
      button5 = PushButton(column1, command=ARM, text="ARM GISS", width=10,height=3)
-   #  button6 = PushButton(column3, command=DISARM, text="DISARM GISS", width=10,height=3)
+     button6 = PushButton(column3, command=DISARM, text="DISARM GISS", width=10,height=3)
      button7 = PushButton(app, command=logout, text="LOGOUT", width=10,height=3)
 
 
@@ -419,7 +419,7 @@ def main_menu_2():
      #button3 = PushButton(app, command=DISARM, text="DISARM GISS", width=10,height=3)
      button3.visible = 1
      button5.visible = 1
-     #button6.visible = 1
+     button6.visible = 1
      button7.visible = 1
     
 def main_menu_3():
