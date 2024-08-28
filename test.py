@@ -214,6 +214,7 @@ class KeypadWindow:
                     self.passcode = ""
                 self.passcode += str(i)
                 self.update_result()
+    
         elif i == 10:  # Clear button
             self.passcode = "0"
             self.update_result()
@@ -263,32 +264,40 @@ class SetupWindow:
         # Create the keypad layout
         self.screen_keypad = Box(self.window, visible=True, width="fill")
         self.keypad_button = Box(self.screen_keypad, layout="grid", width="fill", align="left")
-        self.keypad_result = Box(self.screen_keypad, width="fill", align="right")
+        self.keypad_result = Box(self.screen_keypad, width = "fill", align="left")
 
         # Display the entered passcode
-        self.result = Text(self.keypad_result, text="0", size=40)
+        self.result = Text(self.keypad_result, text="0", size=10, align = "left")
 
         # Create the buttons for the keypad
         self.button = []
         for i in range(0, 10):
             x = int((i + 2) % 3) if i else 0
             y = 3 - int((i + 2) / 3)
-            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=30, command=self.keypad_input, args=[i]))
-            self.button[i].text_size = 40
+            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=10, pady = 10, command=self.keypad_input, args=[i]))
+            self.button[i].text_size = 10
 
-        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=30, command=self.keypad_input, args=[10]))
-        self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2, 3], padx=20, command=self.keypad_input, args=[11]))
-        self.button[10].text_size = 40
-        self.button[11].text_size = 40
+        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=10, pady = 10, command=self.keypad_input, args=[10]))
+        self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2, 3], padx=10, pady = 10, command=self.keypad_input, args=[11]))
+        self.button[10].text_size = 10
+        self.button[11].text_size = 10
 
     def keypad_input(self, i):
         
         if i < 10:  # Digit button pressed
             if len(self.passcode) < 6:  # Limit to 6 digits
+
                 if self.passcode == "0":
                     self.passcode = ""
-                self.passcode += str(i)
-                self.update_result()
+                #self.passcode += str(i)
+                #self.update_result()
+                
+                if len(self.passcode) == 0 or self.passcode[-1] != str(i):  # Prevent repeating adjacent digits
+                    self.passcode += str(i)
+                    self.update_result()
+                else:
+                    self.result.value = "No repeated digits!"
+                
         elif i == 10:  # Clear button
             self.passcode = "0"
             self.update_result()
@@ -715,6 +724,7 @@ master_box = Box(app, layout="auto", width="fill", height="fill")
 column1 = Box(master_box, align="left")
 column2 = Box(master_box, align="left")
 column3 = Box(master_box, align="left")
+column4 = Box(master_box, align="left")
 
 admin=user()
 USER1 = user()
@@ -734,7 +744,7 @@ if ADMIN_username is not None and ADMIN_username != "":
             admin.set_profile(ADMIN_username, ADMIN_password, "1")
             message3 = Text(app, f"Hi {admin.name}!, Welcome to GISS! For security reasons we will make you login once again.", visible = 0)
             say_my_name()
-            adminEMAIL = app.question("Please enter a GMAIL to link with your account", "GMAIL: ", initial_value=None)
+            adminEMAIL = app.question("Please enter a GMAIL/OULOOK/YAHOO email to link with your account", "EMAIL: ", initial_value=None)
             if '@gmail.com' in adminEMAIL or '@outlook.com' in adminEMAIL or '@yahoo.com' in adminEMAIL:
                 app.info("Success!", "Account Created")
                 #SENDEMAIL(adminEMAIL)
@@ -749,7 +759,7 @@ if ADMIN_username is not None and ADMIN_username != "":
         app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
         close_gui()
 else: 
-    app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
+    app.warn("Uh oh!","That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
     close_gui()
 
 
