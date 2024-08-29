@@ -7,6 +7,7 @@ import struct
 from time import time
 import pvporcupine
 import pvcheetah
+from alarm_components import arm_system
 # from led_alarm_servo import led_controller  # Import the LEDController instance
 
 def enroll_speaker():
@@ -58,7 +59,8 @@ def delete_speaker(speaker_name):
         print(f"No profile found for '{speaker_name}'.")
 
 def recognize_speaker():
-
+    global authorized
+    authorized = False
     access_key = "UQOnRaJ10JVpaGU0XYreQaSBIV+JMUU387+IzalVU+C2U1bAyvC4EQ=="
 
     # Update: Load all speaker profiles
@@ -103,6 +105,7 @@ def recognize_speaker():
                     highest_score_index = scores.index(highest_score)
                     if highest_score > RECOGNITION_THRESHOLD:
                         print(f"{profile_files[highest_score_index].split('_')[0]} is speaking.")
+                        recognized = True
                         led_controller.set_color((0, 0, 1))  # Set the LED to blue#RGB
                     else:
                         print("User not recognized.")
@@ -152,7 +155,6 @@ def listen_for_wake_word_and_password(access_key, keyword_path, expected_passwor
 
     try:
         print("Listening for wake word...")
-        while True:
             pcm = recorder.read()
             keyword_index = porcupine.process(pcm)
             if keyword_index >= 0:
@@ -170,7 +172,8 @@ def listen_for_wake_word_and_password(access_key, keyword_path, expected_passwor
                     
                     # Check if the expected password is within the transcript
                     if expected_password.lower() in transcript.lower():
-                        print("Voice password matched! Do something...")
+                        print("Voice password matched! Arming Guardian...")
+                        arm_system()
                         return True
                 
                 print("Voice password not detected within the time limit. Try again.")
