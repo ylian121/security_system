@@ -139,10 +139,14 @@ def turn_on_camera():
 
 
 # face recognition + print for activity log
-def faceRecognition(folder="faces2"):
-    # Encode faces from the specified folder
+
+def faceRecognition():
+    # Initialize SimpleFacerec
     sfr = SimpleFacerec()
-    sfr.load_encoding_images(folder)
+
+    # Load all .jpg images from the current directory
+    image_files = [file for file in os.listdir() if file.endswith('.jpg')]
+    sfr.load_encoding_images(image_files)
 
     # Load Camera
     cap = cv2.VideoCapture(0)
@@ -173,14 +177,10 @@ def faceRecognition(folder="faces2"):
 
         for face_loc, name in zip(face_locations, face_names):
 
-            #print(f"Recognized: {name}")
-
             y1, x2, y2, x1 = face_loc[0], face_loc[1], face_loc[2], face_loc[3]
 
             cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 4)
-
-        #cv2.imshow("Frame", frame)
 
         k = cv2.waitKey(30) & 0xff
 
