@@ -3,12 +3,13 @@
 from gpiozero.pins.pigpio import PiGPIOFactory
 from threading import Thread
 from gpiozero import RGBLED, Buzzer, Servo, MotionSensor
-from time import sleep
+from time import sleep, time
 
 #email
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+
 
 # Use pigpio pin factory for more accurate PWM
 factory = PiGPIOFactory()
@@ -25,12 +26,12 @@ def SENDEMAILACTIVITY(email):
     sender_email = "pajaka755@gmail.com"
     receiver_email = email
     subject = "URGENT: GISS MOTION DETECTED"
-    body = "Hello, view the activity log here: http://172.20.10.11:5001/. Motion has been detected"
+    body = "Hello, MOTION HAS BEEN DETECTED! view the activity log here. Here is the live viewing feed: http://172.20.10.11:5001/"
 
     # SMTP server configuration (Example for Gmail)
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    password = "seniordesign1)1"  # Consider using an environment variable for the password
+    password = "lrvp iztv zwsb rfuc"  # Consider using an environment variable for the password
 
     # Create the email
     msg = MIMEMultipart()
@@ -105,15 +106,13 @@ def disarm_system():
     print("System disarmed. Blue LED on.")
 
 def trigger_alarm():
-    pir_result = faceRecognition()
-            if isinstance(face_recog_result, str):
-                # If face_recognition returns a string, save it in JSON format
-                result = {"person detected": face_recog_result}
-                save_activity(result)
-                return 
+    seconds = time.time()
+    result = ("motion detected:", seconds)
+    save_activity(result)
     if armed:  # Only trigger alarm if the system is armed
         led_controller.set_color((1, 0, 0))  # Set LED to red
         print("Motion detected! Alarm sounding, red LED on.")
+        SENDEMAILACTIVITY(
         
 
         # Keep the alarm sounding until the system is disarmed
