@@ -294,10 +294,7 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
     cv2.destroyAllWindows()
 
 
-def capture_new_user(name, folder="faces2"):
-    # Create folder if it doesn't exist
-    if not os.path.exists(folder):
-        os.makedirs(folder)
+def capture_new_user(name):
 
     # Initialize camera
     cap = cv2.VideoCapture(0)
@@ -321,7 +318,7 @@ def capture_new_user(name, folder="faces2"):
     time.sleep(5)  # Delay before taking the picture
 
     # Capture the photo
-    filepath = os.path.join(folder, f"{name}.jpg")
+    filepath = f"{name}.jpg"
     cv2.imwrite(filepath, frame)
     
     print(f"Photo saved as {filepath}")
