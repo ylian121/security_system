@@ -4,6 +4,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from threading import Thread
+from voice import start_voice_recognition_thread
 #import encryption
 #import saving_passwords
 #import files for voice
