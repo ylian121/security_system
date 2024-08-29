@@ -21,7 +21,7 @@ from email.mime.text import MIMEText
 import json
 
 # Function to send an email with a JSON file attached
-
+"""
 # File paths
 activity_info_file = 'activity_log_file.json'
 
@@ -39,7 +39,7 @@ def save_activity(data):
 
 # Load the activity data
 activity_data = load_activity()
-
+"""
 # simple face rec class
 class SimpleFacerec:
 
@@ -273,13 +273,14 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
 
             #print("Detecting people...")
 
+            """
             face_recog_result = faceRecognition()
             if isinstance(face_recog_result, str):
                 # If face_recognition returns a string, save it in JSON format
                 result = {"person detected": face_recog_result}
                 save_activity(result)
                 return    
-            
+            """
             return False
 
         #cv2.imshow("Frame", frame)
