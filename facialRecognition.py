@@ -2,6 +2,7 @@
 import cv2
 import os
 import numpy as np
+import time
 
 # simple rec face support
 import face_recognition
@@ -12,7 +13,32 @@ import glob
 from datetime import date, datetime, timedelta
 from time import sleep
 
+# for sending the activity log email
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+#import json
 
+# Function to send an email with a JSON file attached
+
+# File paths
+#activity_info_file = 'activity_log_file.json'
+
+# Function to load activity data from JSON file
+"""def load_activity():
+    if os.path.exists(activity_info_file):
+        with open(activity_info_file, 'r') as file:
+            return json.load(file)
+    return {}
+
+# Function to save activity data to JSON file
+def save_activity(data):
+    with open(activity_info_file, 'w') as file:
+        json.dump(data, file, indent=4)
+
+# Load the activity data
+activity_data = load_activity()
+"""
 # simple face rec class
 class SimpleFacerec:
 
@@ -98,7 +124,7 @@ def turn_on_camera():
         ret, frame = cap.read()
 
         # Display the resulting frame
-        cv2.imshow("Camera Feed", frame)
+#        cv2.imshow("Camera Feed", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -112,7 +138,7 @@ def turn_on_camera():
 
 
 # face recognition + print for activity log
-def face_recognition(folder="faces"):
+def faceRecognition(folder="faces2"):
     # Encode faces from the specified folder
     sfr = SimpleFacerec()
     sfr.load_encoding_images(folder)
@@ -129,7 +155,7 @@ def face_recognition(folder="faces"):
 
         print(datetime.now())
         sleep(1)
-        
+
         ret, frame = cap.read()
 
         # Detect Faces
@@ -141,7 +167,7 @@ def face_recognition(folder="faces"):
 
                 recognized_name = name
                 print(f"Recognized: {recognized_name}")
-                
+
                 return recognized_name
 
         for face_loc, name in zip(face_locations, face_names):
@@ -168,10 +194,10 @@ def face_recognition(folder="faces"):
 
 
 # delete user
-def delete_user(name, folder="faces"):
+def delete_user(name, folder="faces2"):
     #name = input("Enter the name of the user to delete: ")
     filepath = os.path.join(folder, f"{name}.jpg")
-    
+
     if os.path.exists(filepath):
 
         os.remove(filepath)
@@ -183,7 +209,7 @@ def delete_user(name, folder="faces"):
 
 
 # face recognition without print for log
-def facial_recognition(folder="faces"):
+def facial_recognition(folder="faces2"):
     # Encode faces from the updated folder
     sfr = SimpleFacerec()
     sfr.load_encoding_images(folder)
@@ -205,7 +231,7 @@ def facial_recognition(folder="faces"):
             cv2.putText(frame, name, (x1, y1 - 10), cv2.FONT_HERSHEY_DUPLEX, 1, (0, 0, 200), 2)
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 200), 4)
 
-        cv2.imshow("Frame", frame)
+  #      cv2.imshow("Frame", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -244,13 +270,18 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
             # display the detected people
             cv2.rectangle(frame, (xA, yA), (xB, yB), (0, 255, 0), 2)
 
-            #print("Detecting people...")
+            print("Detecting people...")
+            #faceRecognition()
 
-            face_recognition()
-
+            face_recog_result = faceRecognition()
+            if isinstance(face_recog_result, str):
+                # If face_recognition returns a string, save it in JSON format
+                #result = {"person detected": face_recog_result}
+                #save_activity(result)
+                return
             return False
 
-        cv2.imshow("Frame", frame)
+ #       cv2.imshow("Frame", frame)
 
         k = cv2.waitKey(30) & 0xff
 
@@ -262,38 +293,38 @@ def detect_people(video_source=0, window_size=(640, 480), win_stride=(8, 8)):
     cv2.destroyAllWindows()
 
 
-def capture_new_user(name, folder="faces"):
+def capture_new_user(name, folder="faces2"):
     # Create folder if it doesn't exist
     if not os.path.exists(folder):
         os.makedirs(folder)
-    
+
     # Initialize camera
     cap = cv2.VideoCapture(0)
-    
-    print("Press 'c' to capture a photo, or 'q' to quit.")
-    
-    while True:
 
-        ret, frame = cap.read()
+    if not cap.isOpened():
+        print("Error: Camera could not be opened.")
+        return
 
-        cv2.imshow("Capture Face", frame)
-        
-        k = cv2.waitKey(1) & 0xff
+    # Allow some time for the camera to adjust
+    time.sleep(2)  # Optional: Let the camera warm up
 
-        if k == ord('c'):
+    ret, frame = cap.read()
 
-            # Capture the photo
-            filepath = os.path.join(folder, f"{name}.jpg")
+    if not ret:
+        print("Failed to capture image")
+        return
 
-            cv2.imwrite(filepath, frame)
-            print(f"Photo saved as {filepath}")
+    print("Taking picture in 5 seconds...")
 
-            break
-        elif k == ord('q'):
+    time.sleep(5)  # Delay before taking the picture
 
-            print("Quitting without saving.")
+    # Capture the photo
+    filepath = os.path.join(folder, f"{name}.jpg")
+    cv2.imwrite(filepath, frame)
+    cv2.imshow("Capture Face", frame)
 
-            break
-    
+    print(f"Photo saved as {filepath}")
+
+    # Release the camera and close any open windows
     cap.release()
     cv2.destroyAllWindows()
