@@ -3,14 +3,11 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from threading import Thread
-from threading import Thread
 #import encryption
-#import saving_passwords
 #import saving_passwords
 #import files for voice
 from voice import enroll_speaker, recognize_speaker, delete_speaker, start_voice_recognition_thread
 #import files for face
-from facialRecognition import SimpleFacerec, turn_on_camera, faceRecognition, delete_user, facial_recognition, detect_people, capture_new_user
 from facialRecognition import SimpleFacerec, turn_on_camera, faceRecognition, delete_user, facial_recognition, detect_people, capture_new_user
 import cv2
 import os
@@ -29,13 +26,11 @@ global message21
 #Setting up the email for the live feed and activity log
 def SENDEMAIL(email):
     # Email details
-    sender_email = "bmoye002@gmail.com"
+    sender_email = "pajaka755@gmail.com"
     receiver_email = email
    # print(receiver_email)
     subject = "Welcome to the Guardian Interactive Security System!"
-    body = "Hello! We are so glad that you are using our top-notch security system! Here is the live feed for the Guardian Interactive Security System (GISS): http://172.20.10.11:5001/ .If you need a reminder of your PIN code, please call our help services number. Thank you! Your safety is our first concern!"
-    subject = "Welcome to the Guardian Interactive Security System!"
-    body = "Hello! We are so glad that you are using our top-notch security system! Here is the live feed for the Guardian Interactive Security System (GISS): http://172.20.10.11:5001/ .If you need a reminder of your PIN code, please call our help services number. Thank you! Your safety is our first concern!"
+    body = "Hello! We are so glad that you are using our top-notch security system! Here is the live feed for the Guardian Interactive Security System (GISS): http://172.20.10.11:5001/ .If>
 
 # SMTP server configuration (Example for Gmail)
     smtp_server = "smtp.gmail.com"
@@ -47,7 +42,6 @@ def SENDEMAIL(email):
     msg['From'] = sender_email
     msg['To'] = receiver_email
     msg['Subject'] = subject
-
 # Attach the email body to the message
     msg.attach(MIMEText(body, 'plain'))
 
@@ -93,6 +87,7 @@ def SENDEMAILACTIVITY(email):
     attachment.add_header('Content-Disposition', 'attachment', filename="activity_log_file.json")
     msg.attach(attachment)
 
+
     # Send the email
     try:
         server = smtplib.SMTP(smtp_server, smtp_port)
@@ -104,7 +99,7 @@ def SENDEMAILACTIVITY(email):
         print(f"Error: {e}")
     finally:
         server.quit()
-	    
+
 #Setting up the user class
 class user:
     def __init__(self):
@@ -129,12 +124,12 @@ def ADMIN_menu_SETUP():
    temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
 
    if temp == ADMIN_password:
-   	temp1.set_profile(ADMIN_username, ADMIN_password, 1)
-#	return temp1
+        temp1.set_profile(ADMIN_username, ADMIN_password, 1)
+#       return temp1
 
    else:
-#	message3 = Text(app, text="Please retry. The system will turn off now. Start back up the system to try again.")
-#	close_gui()
+#       message3 = Text(app, text="Please retry. The system will turn off now. Start back up the system to try again.")
+#       close_gui()
         app.warn("Uh oh!", "You are almost out of biscuits!")
 
    message3 = Text(app, text="TEMP")
@@ -143,9 +138,7 @@ def logout():
     buttonsRESET()
     global button8
     global message21
-    global message21
     button8 = PushButton(app, command=login, text="LOGIN", width=10,height=3)
-    message21.visible = 0
     message21.visible = 0
 
 
@@ -172,8 +165,6 @@ def close_gui():
 
 '''def close_gui():
   sys.exit()'''
-'''def close_gui():
-  sys.exit()'''
 
 class KeypadWindow:
     def __init__(self, app, title="Enter Passcode", visible = False):
@@ -181,8 +172,6 @@ class KeypadWindow:
         #self.window.full_screen = True
         self.passcode = ""
         self.correct_pin = None  # This will store the correct PIN set in the setup window
-        self.attempts = 0  # Track the number of attempts
-        self.max_attempts = 3  # Maximum allowed attempt
         self.attempts = 0  # Track the number of attempts
         self.max_attempts = 3  # Maximum allowed attempt
 
@@ -193,7 +182,6 @@ class KeypadWindow:
 
         # Display the entered passcode
         self.result = Text(self.keypad_result, text="0", size=30)
-        self.result = Text(self.keypad_result, text="0", size=30)
 
         # Create the buttons for the keypad
         self.button = []
@@ -202,14 +190,9 @@ class KeypadWindow:
             y = 3 - int((i + 2) / 3)
             self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=20, command=self.keypad_input, args=[i]))
             self.button[i].text_size = 20
-            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=20, command=self.keypad_input, args=[i]))
-            self.button[i].text_size = 20
 
         self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=20, command=self.keypad_input, args=[10]))
-        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=20, command=self.keypad_input, args=[10]))
         self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2,3], padx=20, command=self.keypad_input, args=[11]))
-        self.button[10].text_size = 20
-        self.button[11].text_size = 20
         self.button[10].text_size = 20
         self.button[11].text_size = 20
 
@@ -217,11 +200,7 @@ class KeypadWindow:
         if self.attempts >= self.max_attempts:
             self.result.value = "Locked Out"
             return  # Prevent further input after max attempts
-            
-        if self.attempts >= self.max_attempts:
-            self.result.value = "Locked Out"
-            return  # Prevent further input after max attempts
-            
+
         if i < 10:  # Digit button pressed
             if len(self.passcode) < 6:  # Limit to 6 digits
                 if self.passcode == "0":
@@ -248,29 +227,13 @@ class KeypadWindow:
                         self.window.error("Error", "Incorrect PIN. Please try again.")
                         self.passcode = "0"
                         self.update_result()
-                    #logout()
-                else:
-                    self.attempts += 1
-                    if self.attempts >= self.max_attempts:
-                        self.result.value = "ALARM!"
-                        self.disable_keypad()
-                        #ALARM
-                    else:
-                        self.window.error("Error", "Incorrect PIN. Please try again.")
-                        self.passcode = "0"
-                        self.update_result()
             else:
                 self.result.value = "Enter 6 digits"
 
     def update_result(self):
         self.result.clear()
         self.result.append(self.passcode)
-        
-    def disable_keypad(self):
-        # Disable all buttons to prevent further input
-        for btn in self.button:
-            btn.disable()
-        
+
     def disable_keypad(self):
         # Disable all buttons to prevent further input
         for btn in self.button:
@@ -297,10 +260,9 @@ class SetupWindow:
         self.screen_keypad = Box(self.window, visible=True, width="fill")
         self.keypad_button = Box(self.screen_keypad, layout="grid", width="fill", align="left")
         self.keypad_result = Box(self.screen_keypad, width = "fill", align="left")
-        self.keypad_result = Box(self.screen_keypad, width = "fill", align="left")
+
 
         # Display the entered passcode
-        self.result = Text(self.keypad_result, text="0", size=10, align = "left")
         self.result = Text(self.keypad_result, text="0", size=10, align = "left")
 
         # Create the buttons for the keypad
@@ -310,13 +272,7 @@ class SetupWindow:
             y = 3 - int((i + 2) / 3)
             self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=10, pady = 10, command=self.keypad_input, args=[i]))
             self.button[i].text_size = 10
-            self.button.append(PushButton(self.keypad_button, text=str(i), grid=[x, y], padx=10, pady = 10, command=self.keypad_input, args=[i]))
-            self.button[i].text_size = 10
 
-        self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=10, pady = 10, command=self.keypad_input, args=[10]))
-        self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2, 3], padx=10, pady = 10, command=self.keypad_input, args=[11]))
-        self.button[10].text_size = 10
-        self.button[11].text_size = 10
         self.button.append(PushButton(self.keypad_button, text="C", grid=[1, 3], padx=10, pady = 10, command=self.keypad_input, args=[10]))
         self.button.append(PushButton(self.keypad_button, text="⏎", grid=[2, 3], padx=10, pady = 10, command=self.keypad_input, args=[11]))
         self.button[10].text_size = 10
@@ -354,7 +310,7 @@ class SetupWindow:
 
 def open_setup():
     setup_window.show()
-    
+
 def open_keypad():
     keypad_window.show()
 
@@ -393,7 +349,6 @@ def login():
     else:
         return
 
-
    # global temper
    # temper = user()
     temper = checker(username, password)
@@ -405,7 +360,6 @@ def login():
     elif temper.permission_level == "3":
         main_menu_3()
     else:
-        app.warn("Uh oh!", "Username/Password is incorrect. Please retry.")
         app.warn("Uh oh!", "Username/Password is incorrect. Please retry.")
         return
     button8.visible = 0
@@ -430,7 +384,7 @@ def create_new_user():
        USER4 = x
     elif USER5.name == "":
        USER5 = x
-    else: 
+    else:
        app.warn("Uh oh!", "Sorry! No more space for new users. Remove a User to be able to add one.")
        return
 
@@ -439,7 +393,6 @@ def create_new_user():
 
     print(USER2.name)
     print(USER2.permission_level)
-
 #button1 = PushButton(app, command=create_new_user, text="Add a New User", width=10, height=3, visible = 1)
 
 def ADMIN_menu():
@@ -457,14 +410,8 @@ def ADMIN_menu():
      #xy = x
      global button1
      button1 = PushButton(column1, command=create_new_user, text="Add a New User", width=10, height=3,  visible = 1)
-     button1 = PushButton(column1, command=create_new_user, text="Add a New User", width=10, height=3,  visible = 1)
      #print(xy.name)
 
-     button2 = PushButton(column2, command=removeUser, text="Remove a User", width=10,height=3)
-     button3 = PushButton(column2, command=changePassword, text="Change Password", width=10,height=3)
-     button4 = PushButton(column3, command=changePermissions, text="Change Permissions", width=10,height=3)
-     button5 = PushButton(column1, command=ARM, text="ARM GISS", width=10,height=3)
-     button6 = PushButton(column3, command=DISARM, text="DISARM GISS", width=10,height=3)
      button2 = PushButton(column2, command=removeUser, text="Remove a User", width=10,height=3)
      button3 = PushButton(column2, command=changePassword, text="Change Password", width=10,height=3)
      button4 = PushButton(column3, command=changePermissions, text="Change Permissions", width=10,height=3)
@@ -473,34 +420,33 @@ def ADMIN_menu():
      button7 = PushButton(app, command=logout, text="LOGOUT", width=10,height=3)
 
 
-def main_menu_2(): 
+def main_menu_2():
      #button1 = PushButton(app, command=changePassword, text="Change Password", width=10,height=3)
-    
+
      #button2 = PushButton(app, command=ARM, text="ARM GISS", width=10,height=3)
      #button3 = PushButton(app, command=DISARM, text="DISARM GISS", width=10,height=3)
      button3.visible = 1
      button5.visible = 1
      button6.visible = 1
      button7.visible = 1
-    
+
 def main_menu_3():
     # button1 = PushButton(app, command=changePassword, text="Change Password", width=10,height=3)
     button3.visible = 1
     button7.visible = 1
-    
+
 def addNewUser(tempUser):
     # button1.visible = 0
       # button1.visible = 0
     username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
-    if username is not None and username != "": 
+    if username is not None and username != "":
        password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
-       if password is not None and password != "" and len(password) >=8:
        if password is not None and password != "" and len(password) >=8:
            temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
            if temp is not None and temp != "":
-               permLevelNEW = app.question("Please type in a permission level: ", "Permission Level (2 or 3): ", initial_value=None)    
+               permLevelNEW = app.question("Please type in a permission level: ", "Permission Level (2 or 3): ", initial_value=None)
                if permLevelNEW is not None and permLevelNEW != "":
-                   if permLevelNEW == "2" or permLevelNEW == "3":              
+                   if permLevelNEW == "2" or permLevelNEW == "3":
                        tempUser = user()
                        if temp == password:
                            tempUser.set_profile(username, password, permLevelNEW)
@@ -513,16 +459,15 @@ def addNewUser(tempUser):
                            #print("User's face enrolled")
                            print(tempUser.name)
                            enroll_new_user_face_voice(username)
-                           enroll_new_user_face_voice(username)
                            return tempUser
-                   else: 
+                   else:
                        app.warn("Error! User not saved!", "Please only enter the number 2 or 3")
     '''enroll_speaker()
     print("Speaker successfully enrolled")
     #app.warn("Speaker enrolled")
     capture_new_user()
     print("User's face enrolled")
-    
+
     return tempUser'''
 
     #button2.visible = 0
@@ -533,17 +478,9 @@ def enroll_new_user_face_voice(username):
     app.warn("Info:", "The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
     button51 = PushButton(app, command=capture_new_user(username), text="CAPTURE", width=10,height=3, visible = 1)
     #capture_new_user(username)
-def enroll_new_user_face_voice(username):
-    app.warn("Info:", "We will now enroll your face and voice into the program. Please begin speaking now and do not stop until the program has successfully enrolled you.")
-    enroll_speaker(username)
-    app.warn("Success!", "Speaker successfully enrolled")
-    app.warn("Info:", "The GISS will now enroll your face. Please press the button to capture your a picture of face when you are ready.")
-    button51 = PushButton(app, command=capture_new_user(username), text="CAPTURE", width=10,height=3, visible = 1)
-    #capture_new_user(username)
     print("User's face enrolled")
     button51.visible = 0
-    button51.visible = 0
-    
+
 def removeUser():
     #print("END")
     usernameRemove = app.question("Please type in the username of the user whom you would like to delete: ", "USERNAME: ", initial_value=None)
@@ -576,7 +513,7 @@ def changePassword():
     passwordCURRENT = app.question("Please type in your current password", "CURRENT PASSWORD: ", initial_value=None)
     if passwordCURRENT == admin.userPassword:
         typer = admin
-    elif passwordCURRENT == USER1.userPassword:    
+    elif passwordCURRENT == USER1.userPassword:
         typer = USER1
     elif passwordCURRENT == USER2.userPassword:
         typer = USER2
@@ -589,17 +526,15 @@ def changePassword():
     else:
         app.warn("Uh oh!", "That is incorrect. Please retry.")
         return
-	    
-    if passwordCURRENT is not None and passwordCURRENT != "":
-	    
+
     if passwordCURRENT is not None and passwordCURRENT != "":
          passwordNEW = app.question("Please type in your new password", "NEW PASSWORD: ", initial_value=None)
          if passwordNEW is not None and passwordNEW != "":
              passwordREENTER = app.question("Please re-enter your new password", "RE-ENTER NEW PASSWORD: ", initial_value=None)
              if passwordNEW == passwordREENTER:
-                 if typer == admin: 
+                 if typer == admin:
                      admin.userPassword = passwordNEW
-                 elif typer == USER1: 
+                 elif typer == USER1:
                      USER1.userPassword = passwordNEW
                  elif typer == USER2:
                      USER2.userPassword = passwordNEW
@@ -609,18 +544,18 @@ def changePassword():
                      USER4.userPassword = passwordNEW
                  elif typer == USER5:
                      USER5.userPassword = passwordNEW
-                 else: 
+                 else:
                      app.warn("Uh oh!", "That is incorrect. Please retry.")
                      return
-             else: 
-                     app.warn("Uh oh!", "That is incorrect. Please retry.")
-                     return
-
-         else: 
+             else:
                      app.warn("Uh oh!", "That is incorrect. Please retry.")
                      return
 
-    else: 
+         else:
+                     app.warn("Uh oh!", "That is incorrect. Please retry.")
+
+
+    else:
        app.warn("Uh oh!", "That is incorrect. Please retry.")
        return
 
@@ -641,12 +576,9 @@ def changePermissions():
     elif permissionsRemove == USER5.name:
        permissionsNEW = app.question("Please type in the new permission level (2 or 3)", "NEW PERMISSION LEVEL: ", initial_value=None)
        USER5.permission_level = permissionsNEW
-    else: 
+    else:
        app.warn("Uh oh!", "That is an invalid username. Please retry.")
        return
-
-#ADD NEW ARM FUNCTION HERE
-
 #ADD NEW ARM FUNCTION HERE
 def ARM():
     #print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
@@ -658,66 +590,9 @@ def ARM():
     #set arm to true, set LED
     arm_system()
     #recognize_speaker()
-    #detect_people()
-    
-    """Outline
-    1. log out of their account
-    2. turn on face 
-    3. When system is armed a person is detected:
-        1. can we recognize their face?
-            yes: no alarm
-            no: go to step 2
-                2. can we recognize their voice?
-                    yes: return to system armed
-                    no: set off alarm
-                        3. user has 30 seconds to turn off alarm using pincode that will populate the LCD
-    4. when the system is disarmed: log in screen populates the LCD
-    """
-    """
-    if AUTHORIZED FACE: 
-        open_keypad()
-        if disarm == True: 
-            logout()
-    if PEDESTRIAN BUT NO FACE: 
-        voice
-	if not voice:
-            open_keypad()
-        else:
-            ALARM
-    if NOT AUTHORIZED FACE: 
-         #ALARM   
-    """
-    """
-    """
-    if AUTHORIZED FACE: 
-        open_keypad()
-        if disarm == True: 
-            logout()
-    if PEDESTRIAN BUT NO FACE: 
-        voice
-	if not voice:
-            open_keypad()
-        else:
-            ALARM
-    if NOT AUTHORIZED FACE: 
-         #ALARM   
-    """
-    
+    detect_people()
 def DISARM():
     open_keypad()
-"""   # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
-   app.warn("Success!", "System Successfully Disarmed!")
-    outline
-    open_keypad()
-"""   # print("Developing ... REQUIRES FACE ID AND VOICE RECOGNITION")
-   app.warn("Success!", "System Successfully Disarmed!")
-    outline
-    1. click diarm button on screen
-    2. scan face
-    3. if admin or authorized user: keypad will pop up
-    4. else set off alarm
-"""
-"""
 ##################################################################
 #testing start threads here but move to after admin setup afterwards
 servo_thread = Thread(target=rotate_servo)
@@ -768,13 +643,10 @@ USER3 = user()
 USER4 = user()
 USER5 = user()
 
-app.run(host='0.0.0.0', port=5001, debug=True, threaded=True)
-
 ADMIN_username = app.question("Please type in a username", "USERNAME: ", initial_value=None)
 if ADMIN_username is not None and ADMIN_username != "":
     ADMIN_password = app.question("Please type in a password", "PASSWORD: ", initial_value=None)
-    if ADMIN_password is not None and ADMIN_password != "" and len(ADMIN_password) >=8:    
-    if ADMIN_password is not None and ADMIN_password != "" and len(ADMIN_password) >=8:    
+    if ADMIN_password is not None and ADMIN_password != "" and len(ADMIN_password) >=8:
         temp = app.question("Please re-enter your password", "RE-ENTER PASSWORD: ", initial_value=None)
         if temp == ADMIN_password:
             admin.set_profile(ADMIN_username, ADMIN_password, "1")
@@ -785,19 +657,17 @@ if ADMIN_username is not None and ADMIN_username != "":
                 app.info("Success!", "Account Created")
                 SENDEMAIL(adminEMAIL)
                 enroll_new_user_face_voice(ADMIN_username)
-                SENDEMAIL(adminEMAIL)
-                enroll_new_user_face_voice(ADMIN_username)
             else:
                 app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
                 close_gui()
 
-        else: 
+        else:
             app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
             close_gui()
-    else: 
+    else:
         app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
         close_gui()
-else: 
+else:
     app.warn("Uh oh!", "That is incorrect. Please retry. The system will turn off now. Start back up the system to try again.")
     close_gui()
 

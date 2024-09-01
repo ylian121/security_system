@@ -2,6 +2,7 @@ from flask import Flask, render_template, Response, request
 import cv2
 
 remote_viewing_app = Flask(__name__)
+remote_viewing_app = Flask(__name__)
 
 # Camera class to handle video capture
 class Camera:
@@ -20,6 +21,7 @@ class Camera:
         self.cap.release()
 
 @remote_viewing_app.route('/', methods=['GET', 'POST'])
+@remote_viewing_app.route('/', methods=['GET', 'POST'])
 def move():
     result = ""
     if request.method == 'POST':
@@ -36,6 +38,7 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n\r\n')
 
+@remote_viewing_app.route('/video_feed')
 @remote_viewing_app.route('/video_feed')
 def video_feed():
     return Response(gen(Camera()),
