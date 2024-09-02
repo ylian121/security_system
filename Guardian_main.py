@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from threading import Thread
 from threading import Thread
 #import encryption
-#import saving_passwords
+from saving_passwords import encrypt_data, decrypt_data, load_user_data, save_user_data, save_user
 #import saving_passwords
 #import files for voice
 from voice import enroll_speaker, recognize_speaker, delete_speaker, start_voice_recognition_thread
@@ -26,6 +26,7 @@ from gpiozero import Servo, MotionSensor
 
 global message21
 
+load_user_data()
 #Setting up the email for the live feed and activity log
 def SENDEMAIL(email):
     # Email details
@@ -130,6 +131,7 @@ def ADMIN_menu_SETUP():
 
    if temp == ADMIN_password:
    	temp1.set_profile(ADMIN_username, ADMIN_password, 1)
+	save_user(ADMIN_username, ADMIN_password)
 #	return temp1
 
    else:
@@ -504,6 +506,7 @@ def addNewUser(tempUser):
                        tempUser = user()
                        if temp == password:
                            tempUser.set_profile(username, password, permLevelNEW)
+			   save_user(username, password)
                            #app.warn("The next step is to enroll your voice. Please speak for ")
                            #enroll_speaker()
                            #print("Speaker successfully enrolled")
