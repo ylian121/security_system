@@ -66,3 +66,13 @@ def check_pincode_requirements(pincode):
 
     print("Pincode is valid.")
     return True
+
+def save_user(username, password):
+  
+    hashed_password = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
+    encrypted_password = encrypt_data(hashed_password.decode())
+
+    user_data[username] = {'password': encrypted_password}
+    save_user_data(user_data)
+    print(f"User '{username}' has been saved successfully.")
+    return True
