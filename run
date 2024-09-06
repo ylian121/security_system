@@ -1,0 +1,10 @@
+download all the required libraries
+or use env in facial recognition
+
+run:
+python3 -m venv env
+source env/bin/activate
+-> go into env
+(env)
+(env) python3 test.py
+^^ put in name of file you want to run
