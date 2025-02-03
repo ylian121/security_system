@@ -1,0 +1,1 @@
+The Guardian Interactive Security System, or GISS, is a monitoring device that provides enhanced security through advanced recognition and alert mechanisms. It uses facial and voice recognition with pin code authentication to provide a comprehensive and user-friendly security experience.
